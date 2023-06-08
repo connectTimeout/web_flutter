@@ -168,12 +168,17 @@ class HomePage extends StatelessWidget {
                                         IElevatedButton(
                                           "返回主页",
                                           Icons.home_sharp,
-                                          onPressed: () {GoRouter.of(context).push(AppRoutes.settingPath);},
+                                          onPressed: () {
+                                            GoRouter.of(context)
+                                                .push(AppRouters.settingPath);
+                                          },
                                         ),
                                         IElevatedButton(
                                           "退出登录",
                                           Icons.power_settings_new,
-                                          onPressed: () => bloc.showDeleteConfirmDialog1(context),
+                                          onPressed: () =>
+                                              bloc.showDeleteConfirmDialog1(
+                                                  context),
                                         ),
                                       ],
                                     ),
@@ -251,7 +256,6 @@ class HomePage extends StatelessWidget {
         color: Colors.white,
       ),
       title: Text(
-
         "服务器选择（共$index台）",
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(color: Colors.white, fontSize: 18),

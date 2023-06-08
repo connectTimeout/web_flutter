@@ -4,8 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:web_flutter/components/components.dart';
 
-import 'body.dart';
-
 ///
 /// 公司：南京光速体育科技有限公司
 /// 作者：小杨~~

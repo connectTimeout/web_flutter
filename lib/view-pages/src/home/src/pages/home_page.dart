@@ -31,20 +31,20 @@ class _HomePagesState extends State<HomePages> {
               AnimatedButton(
                 value: "SEO工作台",
                 onTap: () {
-                  GoRouter.of(context).push(AppRoutes.homePath);
+                  GoRouter.of(context).push(AppRouters.homePath);
                 },
               ),
               const SizedBox(
                 height: 40,
               ),
-              showNavigationDrawer!
+              showNavigationDrawer
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AnimatedButton(
                           value: "系统设置",
                           onTap: () {
-                            GoRouter.of(context).push(AppRoutes.homePath);
+                            GoRouter.of(context).push(AppRouters.homePath);
                           },
                         ),
                         const SizedBox(
@@ -53,7 +53,7 @@ class _HomePagesState extends State<HomePages> {
                         AnimatedButton(
                           value: "管理员",
                           onTap: () {
-                            GoRouter.of(context).push(AppRoutes.homePath);
+                            GoRouter.of(context).push(AppRouters.homePath);
                           },
                         ),
                       ],
@@ -63,18 +63,17 @@ class _HomePagesState extends State<HomePages> {
                         AnimatedButton(
                           value: "系统设置",
                           onTap: () {
-                            GoRouter.of(context).push(AppRoutes.homePath);
+                            GoRouter.of(context).push(AppRouters.homePath);
                           },
                         ),
                         const SizedBox(
                           height: 40,
                           width: 600,
                         ),
-
                         AnimatedButton(
                           value: "管理员",
                           onTap: () {
-                            GoRouter.of(context).push(AppRoutes.homePath);
+                            GoRouter.of(context).push(AppRouters.homePath);
                           },
                         ),
                       ],
@@ -106,5 +105,4 @@ class _HomePagesState extends State<HomePages> {
     super.didChangeDependencies();
     showNavigationDrawer = MediaQuery.of(context).size.width >= 620;
   }
-
 }

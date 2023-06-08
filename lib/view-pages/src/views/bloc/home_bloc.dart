@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_flutter/components/common/body/body_mixin.dart';
 import 'package:web_flutter/routers/routers.dart';
 
-class HomeBloc with BodyMixin{
+class HomeBloc with BodyMixin {
   Future<bool?> showDeleteConfirmDialog1(BuildContext context) {
     return showDialog<bool>(
       context: context,
@@ -19,7 +18,7 @@ class HomeBloc with BodyMixin{
                 // var sp = await SpUtil.getInstance();
                 // sp?.remove(userInfo);
                 // ... 执行删除操作
-                GoRouter.of(context).push(AppRoutes.settingPath);
+                GoRouter.of(context).push(AppRouters.login);
                 //关闭对话框
               },
             ),

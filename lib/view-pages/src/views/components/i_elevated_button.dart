@@ -40,8 +40,8 @@ class _IElevatedButtonState extends State<IElevatedButton> {
         },
         child: Padding(
           padding: onHover
-              ? EdgeInsets.symmetric(horizontal: 11, vertical: 5)
-              : EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              ? const EdgeInsets.symmetric(horizontal: 11, vertical: 5)
+              : const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           child: Column(
             children: [
               Icon(
