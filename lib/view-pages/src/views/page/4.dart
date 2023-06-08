@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:web_flutter/components/common/i_tab_bar/src/i_tabs.dart';
 import 'package:web_flutter/components/common/i_tab_bar/src/i_text_tab_bar.dart';
 import 'package:web_flutter/view-pages/src/views/page/3.dart';
-import 'package:web_flutter/view-pages/src/views/page/website_setup.dart';
 
 List<Tab> get homeLists {
   return [
