@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class SEOPage extends StatelessWidget {
@@ -6,11 +5,8 @@ class SEOPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: NavigationDrawer(
-        children: [],
-
-      ),
+    return const NavigationDrawer(
+      children: [],
     );
   }
 }

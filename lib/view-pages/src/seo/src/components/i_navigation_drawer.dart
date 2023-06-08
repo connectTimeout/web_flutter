@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
-import 'package:web_flutter/view-pages/src/views/page/2.dart';
+import 'package:web_flutter/view-pages/src/views/page/website_setup.dart';
 import 'package:web_flutter/view-pages/src/views/page/4.dart';
 
 class NavigationDrawerSection extends StatefulWidget {
@@ -21,6 +22,8 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
       children: [
         Container(
           width: 400,
+          margin: const EdgeInsets.all(5),
+          decoration: BoxDecoration(border: Border.all(width: 0.5)),
           child: INavigationDrawer(
             indicatorShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
@@ -37,12 +40,85 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
             },
             selectedIndex: navDrawerIndex,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-                child: Text(
-                  'Mail',
-                  style: Theme.of(context).textTheme.titleSmall,
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).focusColor,
+                    border: const Border(bottom: BorderSide(width: 0.5))),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const CheapButtons(
+                        title: '网站列表',
+                        icon: Icon(CupertinoIcons.doc_plaintext),
+                      ),
+                      ExpensiveButtons(
+                        onPressed: () {},
+                        title: '网站列表',
+                        icon: CupertinoIcons.add,
+                      ),
+                    ]),
+              ),
+              ColoredBox(
+                color: Theme.of(context).focusColor,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '域名列表（${labelDestinations.length}）',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                      ...listButton.map((e) {
+                        return textButton(e.value, onPressed: e.onPressed);
+                      }),
+                      textButton(
+                        "权重倒序",
+                        onPressed: () {},
+                      ),
+                      MenuAnchor(
+                        builder: (context, controller, child) {
+                          return SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: IconButton(
+                              iconSize: 16,
+                              padding: const EdgeInsets.all(0),
+                              onPressed: () {
+                                if (controller.isOpen) {
+                                  controller.close();
+                                } else {
+                                  controller.open();
+                                }
+                              },
+                              icon: const Icon(
+                                  CupertinoIcons.slider_horizontal_3),
+                            ),
+                          );
+                        },
+                        menuChildren: [
+                          MenuItemButton(
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text('Menu 1'),
+                            ),
+                            onPressed: () {},
+                          ),
+                          MenuItemButton(
+                            child: const Text('Menu 2'),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              const SizedBox(
+                height: 5,
               ),
               ...labelDestinations.map((destination) {
                 return INavigationDrawerDestination(
@@ -53,28 +129,36 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                     ),
                     child: Row(
                       children: [
-                        const INetworkImage(
-                          width: 40,
-                          height: 27,
-                          fit: BoxFit.cover,
-                          borderRadius: 5,
-                          placeholder: ImgAsset.profile,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10, right: 50),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          constraints: const BoxConstraints(maxWidth: 150),
-                          decoration: BoxDecoration(
-                            color: const Color(0xD5F1FFFF),
-                            border: Border.all(
-                                color: const Color(0xD5B7B7B7), width: 0.5),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Text(
-                            "test22.com",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.blue),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              const INetworkImage(
+                                width: 40,
+                                height: 27,
+                                fit: BoxFit.cover,
+                                borderRadius: 5,
+                                placeholder: ImgAsset.profile,
+                              ),
+                              Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                constraints:
+                                    const BoxConstraints(maxWidth: 150),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xD5F1FFFF),
+                                  border: Border.all(
+                                      color: const Color(0xD5B7B7B7),
+                                      width: 0.5),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: const Text(
+                                  "test22.com",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         TextButton(
@@ -123,18 +207,129 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
     );
   }
 
+  Widget textButton(
+    String value, {
+    required VoidCallback onPressed,
+  }) {
+    return InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Text(
+            value,
+            style: const TextStyle(color: Colors.black, fontSize: 14),
+          ),
+        ));
+  }
+
   static Widget _pageAtIndex(int index) {
     if (index == 0) {
       return const one4();
     }
 
     if (index == 1) {
-      return const one2();
+      return const WebsiteSetup();
     }
 
     return const Center(child: Text('Settings page'));
   }
 }
+
+class ExpensiveButtons extends StatefulWidget {
+  const ExpensiveButtons({
+    super.key,
+    this.title,
+    this.icon,
+    this.onPressed,
+  });
+  final String? title;
+  final IconData? icon;
+  final VoidCallback? onPressed;
+
+  @override
+  State<ExpensiveButtons> createState() => _ExpensiveButtonsState();
+}
+
+class _ExpensiveButtonsState extends State<ExpensiveButtons> {
+  bool onHover = false;
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton.icon(
+      onHover: (e) {
+        setState(() {
+          onHover = !onHover;
+        });
+      },
+      style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all(const Color.fromARGB(255, 240, 240, 240)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+      onPressed: widget.onPressed,
+      label: Text(
+        widget.title ?? '',
+        style: TextStyle(color: onHover ? Colors.blue : Colors.black),
+      ),
+      icon: Icon(widget.icon, color: onHover ? Colors.blue : Colors.black),
+    );
+  }
+}
+
+class CheapButtons extends StatelessWidget {
+  const CheapButtons({
+    super.key,
+    this.title,
+    this.icon,
+    this.onPressed,
+  });
+  final String? title;
+  final Icon? icon;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton(
+      style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all(const Color.fromARGB(255, 240, 240, 240)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+      onPressed: onPressed,
+      child: Row(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: icon == null ? 0 : 5),
+            child: icon ?? const SizedBox(),
+          ),
+          Text(
+            title ?? '',
+            style: const TextStyle(color: Colors.black),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TextButtonModel {
+  const TextButtonModel(this.value, {required this.onPressed});
+  final String value;
+  final VoidCallback onPressed;
+}
+
+List<TextButtonModel> listButton = <TextButtonModel>[
+  TextButtonModel("刷新", onPressed: () {}),
+  TextButtonModel("广告", onPressed: () {}),
+  TextButtonModel("友链", onPressed: () {}),
+];
 
 class ExampleDestination {
   const ExampleDestination(this.label, this.icon, this.selectedIcon);
@@ -143,14 +338,6 @@ class ExampleDestination {
   final Widget icon;
   final Widget selectedIcon;
 }
-
-const List<ExampleDestination> destinations = <ExampleDestination>[
-  ExampleDestination('Inbox', Icon(Icons.inbox_outlined), Icon(Icons.inbox)),
-  ExampleDestination('Outbox', Icon(Icons.send_outlined), Icon(Icons.send)),
-  ExampleDestination(
-      'Favorites', Icon(Icons.favorite_outline), Icon(Icons.favorite)),
-  ExampleDestination('Trash', Icon(Icons.delete_outline), Icon(Icons.delete)),
-];
 
 const List<ExampleDestination> labelDestinations = <ExampleDestination>[
   ExampleDestination(

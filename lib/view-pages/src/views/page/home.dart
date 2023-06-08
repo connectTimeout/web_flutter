@@ -5,11 +5,11 @@ import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
 import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
 import 'package:web_flutter/view-pages/src/views/components/i_elevated_button.dart';
+import 'package:web_flutter/view-pages/src/views/page/web_statistics_page.dart';
 
 import '../../../../consts/consts.dart';
 import '../../../../routers/src/go_router.dart';
-import 'web_statistics.dart';
-import '2.dart';
+import 'website_setup.dart';
 import '3.dart';
 import '4.dart';
 import '5.dart';
@@ -142,56 +142,55 @@ class HomePage extends StatelessWidget {
                           DefaultTabController(
                             length: homeList.length,
                             child: SizedBox(
-                                height: MediaQuery.of(context).size.height,
-                                width: width * 0.8,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: TabBar(
-                                            padding: const EdgeInsets.all(15),
-                                            isScrollable: true,
-                                            labelStyle: const TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                            mouseCursor: MouseCursor.defer,
-                                            unselectedLabelColor:
-                                                Globals.oceanBlue,
-                                            indicator: BoxDecoration(
-                                              color: Globals.oceanBlue,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            tabs: [...homeList],
+                              height: MediaQuery.of(context).size.height,
+                              width: width * 0.8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: TabBar(
+                                          padding: const EdgeInsets.all(15),
+                                          isScrollable: true,
+                                          labelStyle: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                          mouseCursor: MouseCursor.defer,
+                                          unselectedLabelColor:
+                                              Globals.oceanBlue,
+                                          indicator: BoxDecoration(
+                                            color: Globals.oceanBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
+                                          tabs: [...homeList],
                                         ),
-                                        IElevatedButton(
-                                          "返回主页",
-                                          Icons.home_sharp,
-                                          onPressed: () {
-                                            GoRouter.of(context)
-                                                .push(AppRouters.settingPath);
-                                          },
-                                        ),
-                                        IElevatedButton(
-                                          "退出登录",
-                                          Icons.power_settings_new,
-                                          onPressed: () =>
-                                              bloc.showDeleteConfirmDialog1(
-                                                  context),
-                                        ),
-                                      ],
-                                    ),
-                                    const Flexible(
-                                      child: TabBarView(
-                                        children: [
-                                          one(),
-                                          one2(),
-                                          one3(),
-                                          one4(),
-                                          one5(),
+                                      ),
+                                      IElevatedButton(
+                                        "返回主页",
+                                        Icons.home_sharp,
+                                        onPressed: () {
+                                          GoRouter.of(context)
+                                              .push(AppRouters.settingPath);
+                                        },
+                                      ),
+                                      IElevatedButton(
+                                        "退出登录",
+                                        Icons.power_settings_new,
+                                        onPressed: () => bloc
+                                            .showDeleteConfirmDialog1(context),
+                                      ),
+                                    ],
+                                  ),
+                                  const Flexible(
+                                    child: TabBarView(
+                                      children: [
+                                        WebStatisticsPage(),
+                                        WebsiteSetup(),
+                                        one3(),
+                                        one4(),
+                                        one5(),
 // Body<List<Recruitment>?>(
 //   onInit: bloc.onInit,
 //   autoKeep: true,
@@ -220,13 +219,12 @@ class HomePage extends StatelessWidget {
 //   create: (_) => CreationBloc(),
 //   child: const CreationPage(),
 // ),
-                                        ],
-                                      ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-
+                            ),
                           ),
                         ],
                       ),
@@ -297,7 +295,7 @@ class HomePage extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           top: top ??= borderSide,
-          right: right??= borderSide,
+          right: right ??= borderSide,
           bottom: bottom ??= borderSide,
           left: left ??= borderSide,
         ),

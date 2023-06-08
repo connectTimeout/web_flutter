@@ -5,11 +5,11 @@ class one3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: 100,
-        width: 100,
-        color: Colors.yellow,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: const ColoredBox(
+        color: Colors.white,
+        child: Column(children: []),
       ),
     );
   }
