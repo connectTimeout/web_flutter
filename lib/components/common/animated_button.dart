@@ -8,7 +8,7 @@ class AnimatedButton extends StatefulWidget {
   final GestureTapCallback? onTap;
 
   @override
-  _AnimatedButtonState createState() => _AnimatedButtonState();
+  State<AnimatedButton> createState() => _AnimatedButtonState();
 }
 
 class _AnimatedButtonState extends State<AnimatedButton>
@@ -84,10 +84,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
         child: Center(
           child: Text(
             widget.value ?? '-',
-            style: GoogleFonts.abel(
-              color: Colors.white,
-              fontSize: 40
-            ),
+            style: GoogleFonts.abel(color: Colors.white, fontSize: 40),
           ),
         ),
       );

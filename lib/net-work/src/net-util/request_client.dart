@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:web_flutter/config/config.dart';
-import 'package:web_flutter/model/common/api_response_entity.dart';
 import 'package:web_flutter/model/model.dart';
 
 import 'exception.dart';
@@ -16,7 +15,8 @@ class RequestClient {
     _dio = Dio(
       BaseOptions(
         baseUrl: RequestConfig.url,
-        connectTimeout: const Duration(milliseconds:RequestConfig.connectTimeout ),
+        connectTimeout:
+            const Duration(milliseconds: RequestConfig.connectTimeout),
       ),
     );
   }
@@ -120,7 +120,8 @@ class RequestClient {
         raw.value = response.data;
         return raw as T;
       } else {
-        ApiResponseEntity<T> apiResponse = ApiResponseEntity<T>.fromJson(response.data);
+        ApiResponseEntity<T> apiResponse =
+            ApiResponseEntity<T>.fromJson(response.data);
         return _handleBusinessResponse<T>(apiResponse);
       }
     } else {

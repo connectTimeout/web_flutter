@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'components/components.dart';
+import 'package:web_flutter/components/components.dart';
+import 'package:web_flutter/consts/consts.dart';
+import 'package:web_flutter/routers/routers.dart';
 
-import 'consts/consts.dart';
-import 'routers/src/go_router.dart';
-
-void main() {
+void main() async {
   Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
@@ -34,8 +32,8 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (context) {
         return '你知道';
       },
-      routeInformationParser: AppRoutes.router.routeInformationParser,
-      routerDelegate: AppRoutes.router.routerDelegate,
+      routeInformationParser: AppRouters.router.routeInformationParser,
+      routerDelegate: AppRouters.router.routerDelegate,
       builder: IToast.init(),
     );
   }

@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:web_flutter/view-pages/home/views/bloc/home_bloc.dart';
-// import 'package:provider/provider.dart';
+import 'package:web_flutter/components/common/constant.dart';
+import 'package:web_flutter/view-pages/src/home/src/pages/home_page.dart';
+import 'package:web_flutter/view-pages/src/login/src/pages/error_page.dart';
+import 'package:web_flutter/view-pages/src/login/src/pages/login_page.dart';
+import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
+import 'package:web_flutter/view-pages/src/views/page/home.dart';
+import '../../view-pages/view.dart';
 
-import '../../view-pages/home/views/page/home.dart';
-import '../../view-pages/home/views/page/home_page.dart';
-
-class AppRoutes {
-  // 用于路径路由(声明式路由)的常量, 路径不包含参数
+class AppRouters {
+// 用于路径路由(声明式路由)的常量, 路径不包含参数
   static const String homePath = '/'; // 根路由
   static const String settingPath = '/settings';
+  static const String login = '/login';
 
-  // 用于 命名路由的常量
+// 用于 命名路由的常量
   static const String homeNamed = 'home_page';
   static const String settingsNamed = 'setting_page';
+  static const String loginNamed = 'login_page';
 
   static GoRouter router = GoRouter(
     initialLocation: homePath, // 默认路由, 不指定这一荐时，默认路由为 '/'
@@ -33,7 +37,33 @@ class AppRoutes {
         path: settingPath,
         child: const HomePages(),
       ),
+      GoRoute(
+        name: loginNamed,
+        path: login,
+        builder: (context, state) {
+          return Provider<LoginBloc>(
+            create: (_) => LoginBloc(),
+            child: LoginPage(
+              location: state.queryParameters['location'],
+              text: state.queryParameters['text'],
+            ),
+          );
+        },
+      ),
     ],
+
+    errorBuilder: (context, GoRouterState state) {
+      return const ErrorPage();
+    },
+    redirect: (context, state) {
+      debugPrint('loginRedirect: ${state.name}');
+      final loggingIn = state.matchedLocation == '/login';
+      //如果没登录,并且当前不在登录页面,去登录 (并将本来想要跳转的页面传递到登录页)
+      if (!Constant.login && !loggingIn) {
+        // return state.namedLocation(loginNamed);
+      }
+      return null;
+    },
   );
 }
 
@@ -48,8 +78,6 @@ RouteBase goRoute({String? name, required String path, required Widget child}) {
         transitionDuration: const Duration(milliseconds: 150),
         transitionsBuilder: (BuildContext context, Animation<double> animation,
             Animation<double> secondaryAnimation, Widget child) {
-          // Change the opacity of the screen using a Curve based on the the animation's
-          // value
           return FadeTransition(
             opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
             child: child,

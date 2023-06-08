@@ -3,12 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
-import 'package:web_flutter/view-pages/home/views/bloc/home_bloc.dart';
-import 'package:web_flutter/view-pages/home/views/components/i_elevated_button.dart';
+import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
+import 'package:web_flutter/view-pages/src/views/components/i_elevated_button.dart';
 
 import '../../../../consts/consts.dart';
 import '../../../../routers/src/go_router.dart';
-import '1.dart';
+import 'web_statistics.dart';
 import '2.dart';
 import '3.dart';
 import '4.dart';
@@ -42,6 +42,7 @@ Tab tab({
   );
 }
 
+BorderSide borderSide = const BorderSide(color: Colors.yellow, width: 3.0);
 bool onHover = false;
 
 class HomePage extends StatelessWidget {
@@ -122,10 +123,12 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     border(
+                      top: BorderSide.none,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           border(
+                            top: BorderSide.none,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height,
                               width: width * 0.2,
@@ -138,8 +141,7 @@ class HomePage extends StatelessWidget {
                           ),
                           DefaultTabController(
                             length: homeList.length,
-                            child: border(
-                              child: SizedBox(
+                            child: SizedBox(
                                 height: MediaQuery.of(context).size.height,
                                 width: width * 0.8,
                                 child: Column(
@@ -224,7 +226,7 @@ class HomePage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ),
+
                           ),
                         ],
                       ),
@@ -284,10 +286,21 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget border({required Widget child}) {
+  Widget border({
+    required Widget child,
+    BorderSide? top,
+    BorderSide? right,
+    BorderSide? bottom,
+    BorderSide? left,
+  }) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(width: 3, color: Colors.yellow),
+        border: Border(
+          top: top ??= borderSide,
+          right: right??= borderSide,
+          bottom: bottom ??= borderSide,
+          left: left ??= borderSide,
+        ),
       ),
       child: child,
     );

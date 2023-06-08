@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:web_flutter/components/common/body/body_mixin.dart';
+import 'package:web_flutter/components/common/body/src/body_mixin.dart';
 import 'package:web_flutter/routers/routers.dart';
 
 class HomeBloc with BodyMixin {
