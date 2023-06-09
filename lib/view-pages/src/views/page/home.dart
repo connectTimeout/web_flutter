@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
 import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
-import 'package:web_flutter/view-pages/src/views/components/i_elevated_button.dart';
+import 'package:web_flutter/components/common/i_button/src/i_elevated_button.dart';
 import 'package:web_flutter/view-pages/src/views/page/web_statistics_page.dart';
 
 import '../../../../consts/consts.dart';
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                             top: BorderSide.none,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height,
-                              width: width * 0.2,
+                              width: width * 0.16,
                               child: ListView(
                                 children: [
                                   ..._buildList(),
@@ -143,7 +143,7 @@ class HomePage extends StatelessWidget {
                             length: homeList.length,
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height,
-                              width: width * 0.8,
+                              width: width * 0.84,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

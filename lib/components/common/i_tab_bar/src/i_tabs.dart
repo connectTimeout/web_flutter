@@ -6,7 +6,7 @@ Tab tabs({
   return Tab(
     height: 34,
     child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
           gradient: LinearGradient(

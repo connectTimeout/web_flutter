@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:web_flutter/components/common/animated_button.dart';
+import 'package:web_flutter/components/common/i_button/src/animated_button.dart';
 import 'package:web_flutter/utils/utils.dart';
 
-import '../../../../../components/components.dart';
-import '../../../../../routers/src/go_router.dart';
+import '../../../components/components.dart';
+import '../../../routers/src/go_router.dart';
 
 class HomePages extends StatefulWidget {
   const HomePages({super.key});

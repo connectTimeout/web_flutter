@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:web_flutter/components/common/i_button/src/i_tooltip.dart';
+import 'package:web_flutter/components/common/i_button/src/various_stateless_button.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
 import 'package:web_flutter/view-pages/src/views/page/website_setup.dart';
@@ -18,11 +20,13 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Row(
       children: [
         Container(
-          width: 400,
+          width: width * 0.28,
           margin: const EdgeInsets.all(5),
+          constraints: const BoxConstraints(minWidth: 340),
           decoration: BoxDecoration(border: Border.all(width: 0.5)),
           child: INavigationDrawer(
             indicatorShape: RoundedRectangleBorder(
@@ -48,7 +52,7 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const CheapButtons(
+                      const VariousStatelessButton(
                         title: '网站列表',
                         icon: Icon(CupertinoIcons.doc_plaintext),
                       ),
@@ -165,12 +169,8 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                           onPressed: () {},
                           child: Text(destination.label),
                         ),
-                        const Tooltip(
-                          textAlign: TextAlign.center,
+                        const ITooltip(
                           message: "widget.tooltipMessage",
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.0),
-                              child: Icon(Icons.info_outline, size: 16)),
                         ),
                         const SizedBox(
                           width: 10,

@@ -1,15 +1,6 @@
-import 'package:flutter/material.dart';
+library i_button;
 
-class IButton extends StatefulWidget {
-  const IButton({super.key});
-
-  @override
-  State<IButton> createState() => _IButtonState();
-}
-
-class _IButtonState extends State<IButton> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
+export 'src/animated_button.dart';
+export 'src/i_elevated_button.dart';
+export 'src/various_stateful_buttons.dart';
+export 'src/various_stateless_button.dart';

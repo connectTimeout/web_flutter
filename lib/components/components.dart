@@ -17,3 +17,9 @@ export 'common/i_drawer/src/i_navigation_drawer.dart';
 ///body
 export 'common/body/src/body.dart';
 export 'common/body/src/body_mixin.dart';
+
+///i_tab_bar
+export 'common/i_tab_bar/i_tab_bar.dart';
+
+///i_button
+export 'common/i_button/i_button.dart';

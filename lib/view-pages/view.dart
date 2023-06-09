@@ -1,3 +1,3 @@
 library view;
 
-export 'src/login/login.dart';
+export '../view-login/login.dart';

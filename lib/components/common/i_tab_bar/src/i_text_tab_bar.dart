@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:web_flutter/view-pages/src/views/page/3.dart';
 
 class ITextTabBar extends StatelessWidget {
   const ITextTabBar(
@@ -14,8 +13,9 @@ class ITextTabBar extends StatelessWidget {
         margin: const EdgeInsets.all(5).copyWith(left: 0),
         padding: const EdgeInsets.all(5).copyWith(bottom: 0),
         decoration: BoxDecoration(
-            border: Border.all(width: 0.5),
-            color: Theme.of(context).highlightColor),
+          border: Border.all(width: 0.5),
+          color: Theme.of(context).highlightColor,
+        ),
         child: Column(children: [
           DefaultTabController(
             length: tabsList.length,
@@ -25,7 +25,8 @@ class ITextTabBar extends StatelessWidget {
                 children: [
                   TabBar(
                     labelPadding: const EdgeInsets.all(2).copyWith(bottom: 0),
-                    padding: const EdgeInsets.all(5).copyWith(bottom: 0),
+                    padding:
+                        const EdgeInsets.all(5).copyWith(bottom: 0, left: 0),
                     isScrollable: true,
                     labelColor: Colors.blue,
                     dividerColor: Colors.white,
@@ -42,15 +43,9 @@ class ITextTabBar extends StatelessWidget {
                     ),
                     tabs: [...tabsList],
                   ),
-                  const Flexible(
+                  Flexible(
                     child: TabBarView(
-                      children: [
-                        one3(),
-                        one3(),
-                        one3(),
-                        one3(),
-                        one3(),
-                      ],
+                      children: children,
                     ),
                   ),
                 ],

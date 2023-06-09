@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
 import 'package:web_flutter/utils/utils.dart';
-import 'package:web_flutter/view-pages/src/login/login.dart';
+import 'package:web_flutter/view-login/login.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key, this.location, this.text});
