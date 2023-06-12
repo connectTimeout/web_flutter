@@ -23,7 +23,9 @@ class ITooltip extends StatelessWidget {
       textAlign: TextAlign.center,
       message: message,
       child: Padding(
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: padding ??
+              const EdgeInsets.symmetric(horizontal: 5.0, vertical: 6)
+                  .copyWith(bottom: 0),
           child: Icon(
             icon ?? CupertinoIcons.question_circle_fill,
             size: size ?? 16,

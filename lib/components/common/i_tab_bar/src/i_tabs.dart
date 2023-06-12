@@ -10,20 +10,16 @@ Tab tabs({
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
           gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.grey,
-                Colors.white60,
-                Colors.white,
-                Colors.transparent,
-              ],
-              stops: [
-                0.3,
-                0.6,
-                0.3,
-                0,
-              ]),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white12,
+              Colors.white38,
+              Colors.white,
+              Colors.white38,
+              Colors.white12,
+            ],
+          ),
         ),
         child: Text(title ?? '')),
   );

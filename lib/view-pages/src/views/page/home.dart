@@ -211,14 +211,6 @@ class HomePage extends StatelessWidget {
 //     );
 //   },
 // ),
-// Provider(
-//   create: (_) => CreationBloc(),
-//   child: const CreationPage(),
-// ),
-// Provider(
-//   create: (_) => CreationBloc(),
-//   child: const CreationPage(),
-// ),
                                       ],
                                     ),
                                   ),

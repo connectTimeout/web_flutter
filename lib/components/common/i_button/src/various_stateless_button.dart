@@ -31,17 +31,21 @@ class VariousStatelessButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Row(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(right: icon == null ? 0 : 5),
-            child: icon ?? const SizedBox(),
-          ),
-          Text(
-            title ?? '',
-            style: TextStyle(color: textColor ?? Colors.black),
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 2),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: icon == null ? 0 : 5, top: 3),
+              child: icon ?? const SizedBox(),
+            ),
+            Text(
+              title ?? '',
+              style: TextStyle(color: textColor ?? Colors.black),
+            ),
+          ],
+        ),
       ),
     );
   }

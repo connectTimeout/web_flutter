@@ -10,7 +10,7 @@ class WebStatisticsPage extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SizedBox(
-        width: width * 0.86,
+        width: width * 0.84,
         child: ColoredBox(
           color: Theme.of(context).dialogBackgroundColor,
           child: const NavigationDrawerSection(),

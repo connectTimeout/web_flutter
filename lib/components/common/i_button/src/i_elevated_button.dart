@@ -65,3 +65,90 @@ class _IElevatedButtonState extends State<IElevatedButton> {
     );
   }
 }
+
+class IExpensiveButtons extends StatefulWidget {
+  const IExpensiveButtons({
+    super.key,
+    this.title,
+    this.icon,
+    this.iconSize = 20,
+    this.onPressed,
+    this.selectBackgroundColor = const Color.fromARGB(255, 240, 240, 240),
+    this.uncheckBackgroundColor = const Color.fromARGB(255, 240, 240, 240),
+    this.selectLabelColor = Colors.blue,
+    this.uncheckLabelColor = Colors.black,
+    this.selectIconColor = Colors.blue,
+    this.uncheckIconColor = Colors.black,
+  });
+  final String? title;
+  final IconData? icon;
+  final double iconSize;
+  final VoidCallback? onPressed;
+
+  ///选中背景
+  final Color? selectBackgroundColor;
+
+  ///未选中背景
+  final Color? uncheckBackgroundColor;
+
+  ///[title] 选中
+  final Color? selectLabelColor;
+
+  ///[title] 选中
+  final Color? uncheckLabelColor;
+
+  ///[icon] 选中
+  final Color? selectIconColor;
+
+  ///[icon] 选中
+  final Color? uncheckIconColor;
+
+  @override
+  State<IExpensiveButtons> createState() => _IExpensiveButtonsState();
+}
+
+class _IExpensiveButtonsState extends State<IExpensiveButtons> {
+  bool onHover = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onHover: (e) {
+        setState(() {
+          onHover = !onHover;
+        });
+      },
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 14,
+        )),
+        backgroundColor: MaterialStateProperty.all(
+          onHover
+              ? widget.selectBackgroundColor
+              : widget.uncheckBackgroundColor,
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+      onPressed: widget.onPressed,
+      label: Padding(
+        padding: const EdgeInsets.only(bottom: 2),
+        child: Text(
+          widget.title ?? '',
+          style: TextStyle(
+              color:
+                  onHover ? widget.selectLabelColor : widget.uncheckLabelColor),
+        ),
+      ),
+      icon: Icon(
+        widget.icon,
+        color: onHover ? widget.selectIconColor : widget.uncheckIconColor,
+        size: widget.iconSize,
+      ),
+    );
+  }
+}

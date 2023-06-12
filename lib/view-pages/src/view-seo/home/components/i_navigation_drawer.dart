@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:web_flutter/components/common/i_button/src/i_tooltip.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
 import 'package:web_flutter/view-pages/src/views/page/website_setup.dart';
@@ -19,13 +18,11 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Row(
       children: [
         Container(
-          width: width * 0.28,
+          width: 400,
           margin: const EdgeInsets.all(5),
-          constraints: const BoxConstraints(minWidth: 340),
           decoration: BoxDecoration(border: Border.all(width: 0.5)),
           child: INavigationDrawer(
             indicatorShape: RoundedRectangleBorder(
@@ -55,7 +52,7 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                         title: '网站列表',
                         icon: Icon(CupertinoIcons.doc_plaintext),
                       ),
-                      IExpensiveButtons(
+                      ExpensiveButtons(
                         onPressed: () {},
                         title: '网站列表',
                         icon: CupertinoIcons.add,
@@ -168,8 +165,12 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                           onPressed: () {},
                           child: Text(destination.label),
                         ),
-                        const ITooltip(
+                        const Tooltip(
+                          textAlign: TextAlign.center,
                           message: "widget.tooltipMessage",
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Icon(Icons.info_outline, size: 16)),
                         ),
                         const SizedBox(
                           width: 10,
@@ -199,7 +200,7 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
             ],
           ),
         ),
-        Flexible(
+        Expanded(
           child: _pageAtIndex(navDrawerIndex),
         ),
       ],
@@ -231,6 +232,50 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
     }
 
     return const Center(child: Text('Settings page'));
+  }
+}
+
+class ExpensiveButtons extends StatefulWidget {
+  const ExpensiveButtons({
+    super.key,
+    this.title,
+    this.icon,
+    this.onPressed,
+  });
+  final String? title;
+  final IconData? icon;
+  final VoidCallback? onPressed;
+
+  @override
+  State<ExpensiveButtons> createState() => _ExpensiveButtonsState();
+}
+
+class _ExpensiveButtonsState extends State<ExpensiveButtons> {
+  bool onHover = false;
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton.icon(
+      onHover: (e) {
+        setState(() {
+          onHover = !onHover;
+        });
+      },
+      style: ButtonStyle(
+        backgroundColor:
+            MaterialStateProperty.all(const Color.fromARGB(255, 240, 240, 240)),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+      onPressed: widget.onPressed,
+      label: Text(
+        widget.title ?? '',
+        style: TextStyle(color: onHover ? Colors.blue : Colors.black),
+      ),
+      icon: Icon(widget.icon, color: onHover ? Colors.blue : Colors.black),
+    );
   }
 }
 
