@@ -24,12 +24,11 @@ class ITooltip extends StatelessWidget {
       message: message,
       child: Padding(
           padding: padding ??
-              const EdgeInsets.symmetric(horizontal: 5.0, vertical: 6)
-                  .copyWith(bottom: 0),
+              const EdgeInsets.symmetric(horizontal: 5.0, vertical: 6),
           child: Icon(
             icon ?? CupertinoIcons.question_circle_fill,
             size: size ?? 16,
-            color: Colors.green,
+            color: color ?? Colors.green,
           )),
     );
   }

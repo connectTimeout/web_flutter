@@ -7,15 +7,16 @@ class VariousStatelessButton extends StatelessWidget {
   final Color? color;
   final Color? textColor;
   final BorderRadiusGeometry? radius;
-  const VariousStatelessButton({
-    super.key,
-    this.title,
-    this.icon,
-    this.color,
-    this.textColor,
-    this.radius,
-    this.onPressed,
-  });
+  final double? fontSize;
+  const VariousStatelessButton(
+      {super.key,
+      this.title,
+      this.icon,
+      this.color,
+      this.textColor,
+      this.radius,
+      this.onPressed,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,8 @@ class VariousStatelessButton extends StatelessWidget {
             ),
             Text(
               title ?? '',
-              style: TextStyle(color: textColor ?? Colors.black),
+              style: TextStyle(
+                  color: textColor ?? Colors.black, fontSize: fontSize),
             ),
           ],
         ),

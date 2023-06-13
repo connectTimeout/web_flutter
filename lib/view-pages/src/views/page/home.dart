@@ -4,14 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
 import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
-import 'package:web_flutter/components/common/i_button/src/i_elevated_button.dart';
 import 'package:web_flutter/view-pages/src/views/page/web_statistics_page.dart';
 
 import '../../../../consts/consts.dart';
 import '../../../../routers/src/go_router.dart';
 import 'website_setup.dart';
 import '3.dart';
-import '4.dart';
 import '5.dart';
 
 const List<String> list = [
@@ -189,7 +187,7 @@ class HomePage extends StatelessWidget {
                                         WebStatisticsPage(),
                                         WebsiteSetup(),
                                         one3(),
-                                        one4(),
+                                        one3(),
                                         one5(),
 // Body<List<Recruitment>?>(
 //   onInit: bloc.onInit,
