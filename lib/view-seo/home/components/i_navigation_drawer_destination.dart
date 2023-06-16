@@ -9,68 +9,101 @@ class IDrawerDestination extends StatelessWidget {
     super.key,
     required this.model,
     this.onPressed,
+    this.isSelect = false,
+    this.showIcon = false,
   });
   final DrawerModel model;
   final VoidCallback? onPressed;
+  final bool isSelect;
+  final bool showIcon;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 5,
-        horizontal: 10,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          INetworkImage(
-            width: 40,
-            height: 27,
-            fit: BoxFit.cover,
-            borderRadius: 5,
-            image: Utils.imgUrl(
-              image: model.image,
-            ),
-            placeholder: ImgAsset.profile,
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              margin: const EdgeInsets.only(left: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: const Color(0xD5F1FFFF),
-                border: Border.all(color: const Color(0xD5B7B7B7), width: 0.5),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                model.value,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: Colors.blue),
-              ),
-            ),
-          ),
-          const Expanded(child: SizedBox()),
-          typeValue(model.type),
-          model.type == NavigationDrawerType.failure
-              ? ITooltip(
-                  message: model.message ?? '',
-                  icon: Icons.alarm,
-                  color: Colors.amber,
-                )
-              : ITooltip(
-                  message: model.message ?? '',
+    return ColoredBox(
+      color: isSelect ? Theme.of(context).focusColor : Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 5,
+          horizontal: 10,
+        ),
+        child: showIcon
+            ? Row(mainAxisSize: MainAxisSize.min, children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: const Color(0xD5F1FFFF),
+                      border: Border.all(
+                          color: const Color(0xD5B7B7B7), width: 0.5),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      model.value,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Colors.blue),
+                    ),
+                  ),
                 ),
-          SizedBox(
-            height: 27,
-            child: VariousStatelessButton(
-              onPressed: onPressed,
-              color: Colors.red,
-              textColor: Colors.white,
-              title: "删除",
-            ),
-          ),
-        ],
+                const Expanded(child: SizedBox()),
+                typeValue(model.type),
+              ])
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  INetworkImage(
+                    width: 40,
+                    height: 27,
+                    fit: BoxFit.cover,
+                    borderRadius: 5,
+                    image: Utils.imgUrl(
+                      image: model.image,
+                    ),
+                    placeholder: ImgAsset.profile,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: const Color(0xD5F1FFFF),
+                        border: Border.all(
+                            color: const Color(0xD5B7B7B7), width: 0.5),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        model.value,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                  typeValue(model.type),
+                  model.type == NavigationDrawerType.failure
+                      ? ITooltip(
+                          message: model.message ?? '',
+                          icon: Icons.alarm,
+                          color: Colors.amber,
+                        )
+                      : ITooltip(
+                          message: model.message ?? '',
+                        ),
+                  SizedBox(
+                    height: 27,
+                    child: VariousStatelessButton(
+                      onPressed: onPressed,
+                      color: Colors.red,
+                      textColor: Colors.white,
+                      title: "删除",
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

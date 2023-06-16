@@ -18,3 +18,4 @@ export 'src/blocs/template_code_bloc.dart';
 
 ///components
 export 'src/components/statistics_cell.dart';
+export 'src/components/site_settings_view.dart';

@@ -17,7 +17,6 @@ List<Tab> get homeLists {
 
 class SeoTabarView extends StatelessWidget {
   const SeoTabarView({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ITextTabBar(

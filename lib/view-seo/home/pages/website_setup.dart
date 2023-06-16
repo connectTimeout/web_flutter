@@ -9,10 +9,6 @@ import 'package:web_flutter/view-seo/statistics/src/pages/site_settings.dart';
 List<Tab> get homeList {
   return [
     tabs(title: "网站统计"),
-    tabs(title: "网站收录"),
-    tabs(title: "蜘蛛统计"),
-    tabs(title: "功能大全"),
-    tabs(title: "克隆配置"),
   ];
 }
 
@@ -24,22 +20,6 @@ class WebsiteSetup extends StatelessWidget {
     return ITextTabBar(
       tabsList: homeList,
       children: [
-        Provider(
-          create: (_) => SiteSettingsBloc(),
-          child: const SiteSettingsPage(),
-        ),
-        Provider(
-          create: (_) => SiteSettingsBloc(),
-          child: const SiteSettingsPage(),
-        ),
-        Provider(
-          create: (_) => SiteSettingsBloc(),
-          child: const SiteSettingsPage(),
-        ),
-        Provider(
-          create: (_) => SiteSettingsBloc(),
-          child: const SiteSettingsPage(),
-        ),
         Provider(
           create: (_) => SiteSettingsBloc(),
           child: const SiteSettingsPage(),

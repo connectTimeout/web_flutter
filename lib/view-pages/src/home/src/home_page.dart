@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_flutter/utils/utils.dart';
 
-import '../../../components/components.dart';
-import '../../../routers/src/go_router.dart';
+import '../../../../components/components.dart';
+import '../../../../routers/src/go_router.dart';
 
 class HomePages extends StatefulWidget {
   const HomePages({super.key});
@@ -30,7 +30,7 @@ class _HomePagesState extends State<HomePages> {
               AnimatedButton(
                 value: "SEO工作台",
                 onTap: () {
-                  GoRouter.of(context).push(AppRouters.homePath);
+                  GoRouter.of(context).push(AppRouters.settingPath);
                 },
               ),
               const SizedBox(

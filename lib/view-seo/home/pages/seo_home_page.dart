@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/utils/utils.dart';
-import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
-import 'package:web_flutter/view-pages/src/views/page/web_statistics_page.dart';
+import 'package:web_flutter/view-seo/home/blocs/seo_home_bloc.dart';
+import 'package:web_flutter/view-seo/home/components/i_tab_bar_view.dart';
+import 'package:web_flutter/view-seo/home/pages/drawer_page.dart';
 
-import '../../../../consts/consts.dart';
-import '../../../../routers/src/go_router.dart';
-import 'website_setup.dart';
-import '3.dart';
-import '5.dart';
+import '../../../view-pages/src/views/page/3.dart';
+import '../../../view-pages/src/views/page/5.dart';
+import 'seo_tabar_view.dart';
+import 'web_statistics_page.dart';
 
 const List<String> list = [
   "103.146.158.58 - 103.146.158.58",
@@ -130,91 +129,36 @@ class HomePage extends StatelessWidget {
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height,
                               width: width * 0.16,
-                              child: ListView(
-                                children: [
-                                  ..._buildList(),
-                                ],
+                              child: ExpansionTile(
+                                initiallyExpanded: true,
+                                leading: const Icon(
+                                  Icons.lan,
+                                  color: Colors.white,
+                                ),
+                                title: Text(
+                                  "服务器选择（共${list.length}台）",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                children: list
+                                    .map((e) => _generateWidget(e))
+                                    .toList(),
                               ),
                             ),
                           ),
-                          DefaultTabController(
-                            length: homeList.length,
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height,
-                              width: width * 0.84,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: TabBar(
-                                          padding: const EdgeInsets.all(15),
-                                          isScrollable: true,
-                                          labelStyle: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                          mouseCursor: MouseCursor.defer,
-                                          unselectedLabelColor:
-                                              Globals.oceanBlue,
-                                          indicator: BoxDecoration(
-                                            color: Globals.oceanBlue,
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                          tabs: [...homeList],
-                                        ),
-                                      ),
-                                      IElevatedButton(
-                                        "返回主页",
-                                        Icons.home_sharp,
-                                        onPressed: () {
-                                          GoRouter.of(context)
-                                              .push(AppRouters.settingPath);
-                                        },
-                                      ),
-                                      IElevatedButton(
-                                        "退出登录",
-                                        Icons.power_settings_new,
-                                        onPressed: () => bloc
-                                            .showDeleteConfirmDialog1(context),
-                                      ),
-                                    ],
-                                  ),
-                                  const Flexible(
-                                    child: TabBarView(
-                                      children: [
-                                        WebStatisticsPage(),
-                                        WebsiteSetup(),
-                                        one3(),
-                                        one3(),
-                                        one5(),
-// Body<List<Recruitment>?>(
-//   onInit: bloc.onInit,
-//   autoKeep: true,
-//   controller: bloc.controller,
-//   builder: (context, data) {
-//     return JKPullRefresh(
-//       controller: bloc.refreshController,
-//       onRefresh: bloc.onInit,
-//       onLoading: bloc.onLoading,
-//       empty: data!.isEmpty,
-//       child: ListView.builder(
-//         itemCount: data.length,
-//         itemBuilder: (item, index) => RecruitmentCell(
-//           onTap: () {},
-//           model: data[index],
-//         ),
-//       ),
-//     );
-//   },
-// ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          ITabBarView(
+                            tabList: bloc.homeList,
+                            children: const [
+                              WebStatisticsPage(),
+                              one3(),
+                              SeoTabarView(),
+                              TemplateDesktopPage(),
+                              TemplateDesktopPage(),
+                            ],
+                            onPressed: () {},
                           ),
                         ],
                       ),
@@ -226,31 +170,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  /// 创建列表 , 每个元素都是一个 ExpansionTile 组件
-  List<Widget> _buildList() {
-    List<Widget> widgets = [];
-    widgets.add(_generateExpansionTileWidget(list));
-    return widgets;
-  }
-
-  /// 生成 ExpansionTile 组件 , children 是 List<Widget> 组件
-  Widget _generateExpansionTileWidget(List<String>? names) {
-    int index = names?.length ?? 0;
-    return ExpansionTile(
-      initiallyExpanded: true,
-      leading: const Icon(
-        Icons.lan,
-        color: Colors.white,
-      ),
-      title: Text(
-        "服务器选择（共$index台）",
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(color: Colors.white, fontSize: 18),
-      ),
-      children: names!.map((name) => _generateWidget(name)).toList(),
     );
   }
 

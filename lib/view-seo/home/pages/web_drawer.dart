@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
-import 'package:web_flutter/view-pages/src/views/page/seo_tabar_view.dart';
-import 'package:web_flutter/view-pages/src/views/page/website_setup.dart';
+import 'package:web_flutter/view-seo/home/pages/seo_tabar_view.dart';
+import 'package:web_flutter/view-seo/home/pages/website_setup.dart';
 import 'package:web_flutter/view-seo/home/blocs/web_drawer_bloc.dart';
 import 'package:web_flutter/view-seo/home/components/i_navigation_drawer_destination.dart';
 

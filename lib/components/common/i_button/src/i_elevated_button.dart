@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:web_flutter/consts/consts.dart';
 
 class IElevatedButton extends StatefulWidget {
-  const IElevatedButton(
-    this.text,
-    this.icon, {
+  const IElevatedButton({
+    required this.title,
+    required this.icon,
     this.onPressed,
     Key? key,
   }) : super(key: key);
 
-  final String text;
+  final String title;
   final IconData icon;
   final void Function()? onPressed;
 
@@ -51,7 +51,7 @@ class _IElevatedButtonState extends State<IElevatedButton> {
               ),
               const SizedBox(height: 2),
               Text(
-                widget.text,
+                widget.title,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -149,6 +149,109 @@ class _IExpensiveButtonsState extends State<IExpensiveButtons> {
         color: onHover ? widget.selectIconColor : widget.uncheckIconColor,
         size: widget.iconSize,
       ),
+    );
+  }
+}
+
+class IFunctionButton extends StatefulWidget {
+  const IFunctionButton({
+    required this.title,
+    required this.icon,
+    this.isSelect = true,
+    this.onPressed,
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+  final IconData icon;
+  final bool isSelect;
+  final void Function()? onPressed;
+
+  @override
+  State<IFunctionButton> createState() => _IFunctionButtonState();
+}
+
+class _IFunctionButtonState extends State<IFunctionButton> {
+  bool onHover = false;
+
+  Color? get colors {
+    return onHover ? Colors.white : Globals.oceanBlue;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: widget.isSelect
+          ? ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Globals.oceanBlue,
+              ),
+              onPressed: widget.onPressed,
+              onHover: (value) {
+                setState(() {
+                  onHover = !onHover;
+                });
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+                child: Column(
+                  children: [
+                    Icon(
+                      widget.icon,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: onHover
+                            ? Colors.white
+                            : const Color.fromARGB(255, 252, 250, 157),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: onHover ? Globals.oceanBlue : Colors.white60,
+              ),
+              onPressed: widget.onPressed,
+              onHover: (value) {
+                setState(() {
+                  onHover = !onHover;
+                });
+              },
+              child: Padding(
+                padding: onHover
+                    ? const EdgeInsets.symmetric(horizontal: 11, vertical: 5)
+                    : const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                child: Column(
+                  children: [
+                    Icon(
+                      widget.icon,
+                      color: colors,
+                      size: 26,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: colors,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

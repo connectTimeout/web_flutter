@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/common/constant.dart';
-import 'package:web_flutter/view-pages/src/pages/home_page.dart';
+import 'package:web_flutter/view-pages/src/home/src/home_page.dart';
 import 'package:web_flutter/view-login/src/pages/error_page.dart';
 import 'package:web_flutter/view-login/src/pages/login_page.dart';
-import 'package:web_flutter/view-pages/src/views/bloc/home_bloc.dart';
-import 'package:web_flutter/view-pages/src/views/page/home.dart';
+import 'package:web_flutter/view-seo/home/blocs/bbb.dart';
+import 'package:web_flutter/view-seo/home/blocs/seo_home_bloc.dart';
+import 'package:web_flutter/view-seo/home/components/drawer_model.dart';
+import 'package:web_flutter/view-seo/home/pages/seo_home_page.dart';
+import 'package:web_flutter/view-seo/statistics/statistics.dart';
 import '../../view-pages/view.dart';
+import '../../view-seo/home/pages/bbb.dart';
 
 class AppRouters {
 // 用于路径路由(声明式路由)的常量, 路径不包含参数
   static const String homePath = '/'; // 根路由
   static const String settingPath = '/settings';
+  static const String sitePath = '/site';
   static const String login = '/login';
+  static const String bbbPath = '/bbb';
+  static const String bbbNamed = 'bbb';
 
 // 用于 命名路由的常量
   static const String homeNamed = 'home_page';
   static const String settingsNamed = 'setting_page';
+  static const String siteNamed = 'site';
   static const String loginNamed = 'login_page';
 
   static GoRouter router = GoRouter(
@@ -27,15 +35,26 @@ class AppRouters {
         // 不传递参数的路由项
         name: homeNamed, // 命名路由
         path: homePath, // 路径路由
+        child: const HomePages(),
+      ),
+      goRoute(
+        name: settingsNamed,
+        path: settingPath,
         child: Provider<HomeBloc>(
           create: (_) => HomeBloc(),
           child: const HomePage(),
         ),
       ),
-      goRoute(
-        name: settingsNamed,
-        path: settingPath,
-        child: const HomePages(),
+      GoRoute(
+        name: bbbNamed,
+        path: bbbPath,
+        builder: (context, state) {
+          final model = state.extra as DrawerModel;
+          return Provider<BBBBloc>(
+            create: (_) => BBBBloc(model),
+            child: const BBB(),
+          );
+        },
       ),
       GoRoute(
         name: loginNamed,
