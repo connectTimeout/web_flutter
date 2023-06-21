@@ -41,7 +41,6 @@ class SEODomainBloc with BodyMixin {
 
   void onDomainTab(BuildContext context, int index, int id) {
     selectIndex = index;
-    print("object");
     context.goNamed(AppRouters.siteSettingsNamed,
         extra: domainList?[index], queryParameters: {"serverId": "$id"});
   }
