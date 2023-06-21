@@ -13,6 +13,7 @@ export 'common/jk_pull_refresh.dart';
 export 'common/input_box.dart';
 export 'common/constant.dart';
 export 'common/i_drawer/src/i_navigation_drawer.dart';
+export 'common/shared_preferences.dart';
 
 ///body
 export 'common/body/src/body.dart';
@@ -22,4 +23,7 @@ export 'common/body/src/body_mixin.dart';
 export 'common/i_tab_bar/i_tab_bar.dart';
 
 ///i_button
-export 'common/i_button/i_button.dart';
+export 'common/i_button/i_buttons.dart';
+
+///adapter
+export 'common/adapter/cupertino_swipe_back_observer.dart';

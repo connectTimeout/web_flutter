@@ -1,21 +1,13 @@
 library statistics;
 
 ///page
-export 'src/pages/advertisement_setting.dart';
-export 'src/pages/friendly_links.dart';
-export 'src/pages/nginx_config.dart';
-export 'src/pages/site_settings.dart';
-export 'src/pages/statistics_code.dart';
-export 'src/pages/template_code.dart';
+export '../site-management/src/pages/nginx_config_page.dart';
+export '../site-management/src/pages/site_settings_page.dart';
 
 ///bloc
-export 'src/blocs/advertisement_setting_bloc.dart';
-export 'src/blocs/friendly_links_bloc.dart';
-export 'src/blocs/nginx_config_bloc.dart';
-export 'src/blocs/site_settings_bloc.dart';
-export 'src/blocs/statistics_code_bloc.dart';
-export 'src/blocs/template_code_bloc.dart';
+export '../site-management/src/blocs/nginx_config_bloc.dart';
+export '../site-management/src/blocs/site_settings_bloc.dart';
 
 ///components
-export 'src/components/statistics_cell.dart';
-export 'src/components/site_settings_view.dart';
+export '../site-management/src/components/statistics_cell.dart';
+export '../site-management/src/components/site_settings_view.dart';

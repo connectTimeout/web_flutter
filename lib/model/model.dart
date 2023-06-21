@@ -1,10 +1,10 @@
 library model;
 
-export 'common/row_data.dart';
+export '../components/common/common/row_data.dart';
 
 /// api
-export 'common/api_response_entity.dart';
-export 'common/api_response_entity.g.dart';
+export '../components/common/common/api_response_entity.dart';
+export '../components/common/common/api_response_entity.g.dart';
 
 ///common
-export 'common/static/static.dart';
+export '../components/common/common/static/static.dart';

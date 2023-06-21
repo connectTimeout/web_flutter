@@ -31,6 +31,7 @@ class ImgAsset {
 
   static const String beijing = 'assets/images/beijing.jpg';
 
+  static const String baidu = 'assets/images/baidu.jpg';
 
   static const String excelExt = 'assets/file-ext/excel.png';
   static const String pdfExt = 'assets/file-ext/pdf.png';

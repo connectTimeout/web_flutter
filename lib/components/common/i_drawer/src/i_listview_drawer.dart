@@ -94,7 +94,7 @@ class ListPane extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("GalleryLocalizations.of(context)!.demoTwoPaneList"),
+        title: const Text("GalleryLocalizations.of(context)!.demoTwoPaneList"),
       ),
       body: Scrollbar(
         child: ListView(
@@ -139,7 +139,7 @@ class DetailsPane extends StatelessWidget {
         leading: onClose == null
             ? null
             : IconButton(icon: const Icon(Icons.close), onPressed: onClose),
-        title: Text(
+        title: const Text(
           "nihao",
         ),
       ),

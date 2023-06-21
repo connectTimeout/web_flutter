@@ -30,53 +30,18 @@ class _HomePagesState extends State<HomePages> {
               AnimatedButton(
                 value: "SEO工作台",
                 onTap: () {
-                  GoRouter.of(context).push(AppRouters.settingPath);
+                  context.go(AppRouters.siteSettingsPath);
                 },
               ),
               const SizedBox(
                 height: 40,
               ),
-              showNavigationDrawer
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimatedButton(
-                          value: "系统设置",
-                          onTap: () {
-                            GoRouter.of(context).push(AppRouters.homePath);
-                          },
-                        ),
-                        const SizedBox(
-                          width: 40,
-                        ),
-                        AnimatedButton(
-                          value: "管理员",
-                          onTap: () {
-                            GoRouter.of(context).push(AppRouters.homePath);
-                          },
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        AnimatedButton(
-                          value: "系统设置",
-                          onTap: () {
-                            GoRouter.of(context).push(AppRouters.homePath);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 40,
-                          width: 600,
-                        ),
-                        AnimatedButton(
-                          value: "管理员",
-                          onTap: () {
-                            GoRouter.of(context).push(AppRouters.homePath);
-                          },
-                        ),
-                      ],
-                    ),
+              AnimatedButton(
+                value: "管理员",
+                onTap: () {
+                  context.go(AppRouters.siteSettingsPath);
+                },
+              ),
             ],
           ),
         ],

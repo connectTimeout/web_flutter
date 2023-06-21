@@ -32,8 +32,7 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (context) {
         return '你知道';
       },
-      routeInformationParser: AppRouters.router.routeInformationParser,
-      routerDelegate: AppRouters.router.routerDelegate,
+      routerConfig: AppRouters.router,
       builder: IToast.init(),
     );
   }
