@@ -3,86 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
+import 'package:web_flutter/utils/src/img_asset.dart';
 import 'package:web_flutter/view-seo/statistics/statistics.dart';
-
-///布局方式
-Widget rowTextList({required String title, required List<Widget> children}) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 20),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 100,
-          padding: const EdgeInsets.only(top: 4, right: 10),
-          alignment: Alignment.centerRight,
-          child: Text(
-            "$title：",
-            style: const TextStyle(
-              color: Color.fromARGB(129, 4, 24, 14),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 9,
-          child: Wrap(
-            spacing: 4, // 横向间距
-            runSpacing: 10, //纵向间距
-            children: children,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-///checkbox按钮
-Widget iCheckbox({
-  required bool? value,
-  required void Function(bool?)? onChanged,
-  required String? title,
-  double? maxWidth,
-}) {
-  return ConstrainedBox(
-    constraints: BoxConstraints(maxWidth: maxWidth ?? 85, maxHeight: 34),
-    child: CheckboxMenuButton(
-      value: value,
-      onChanged: onChanged,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 2),
-        child: Text(
-          title ?? '',
-          style: TextStyle(color: value! ? Colors.blue : Colors.black),
-        ),
-      ),
-    ),
-  );
-}
-
-///橙色动态按钮
-Widget expensiveButton(
-  String title,
-  IconData? icon,
-  void Function()? onPressed,
-) {
-  return IExpensiveButtons(
-    icon: icon,
-    title: title,
-    onPressed: onPressed,
-    selectBackgroundColor: const Color.fromARGB(183, 255, 148, 9),
-    selectIconColor: Colors.white,
-    selectLabelColor: Colors.white,
-    uncheckBackgroundColor: const Color.fromARGB(255, 253, 242, 228),
-    uncheckIconColor: const Color.fromARGB(183, 255, 148, 9),
-    uncheckLabelColor: const Color.fromARGB(183, 255, 148, 9),
-    iconSize: 15,
-  );
-}
 
 /// 按钮"开启反审查" : "关闭反审查""禁用站点",
 class SiteButtonView extends StatelessWidget {
   const SiteButtonView({super.key});
+
   @override
   Widget build(BuildContext context) {
     var bloc = Provider.of<SiteSettingsBloc>(context);
@@ -141,71 +68,43 @@ class SiteDomainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     var bloc = Provider.of<SiteSettingsBloc>(context);
     return ChangeNotifierProvider<PagesScope>.value(
       value: bloc.pageScope,
       child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return rowTextList(
+        return ITextListCell(
           title: "网站域名",
           children: [
-            Container(
-              margin:
-                  const EdgeInsets.symmetric(horizontal: 15).copyWith(left: 0),
-              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
-              width: width * 0.15,
-              constraints: const BoxConstraints(minWidth: 200),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(31, 189, 189, 189),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  width: 0.5,
-                  color: const Color.fromARGB(31, 54, 54, 54),
-                ),
-              ),
-              child: const Text("test22.com"),
+            ITextField(
+              controller: bloc.innerDescriptController,
+              width: 250,
+              height: 35,
+              maxLines: 1,
+              enabled: false,
+              hintText: "test22.com",
             ),
-            iCheckbox(
+            ICheckbox(
               value: bloc.isCheckedW,
               onChanged: bloc.onChangedWChanged,
               title: "wwww",
             ),
-            iCheckbox(
+            ICheckbox(
               value: bloc.isChecked,
               maxWidth: 55,
               onChanged: bloc.onChangedChanged,
               title: "@",
             ),
-            iCheckbox(
+            ICheckbox(
               value: bloc.isCheckedM,
               maxWidth: 55,
               onChanged: bloc.onChangedMChanged,
               title: "m",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: SizedBox(
-                width: 200,
-                height: 35,
-                child: TextField(
-                  controller: bloc.checkController,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(top: 8, left: 5),
-                    suffixIcon: IconButton(
-                      padding: const EdgeInsets.all(0),
-                      icon: const Icon(
-                        Icons.clear,
-                        size: 15,
-                      ),
-                      onPressed: () => bloc.checkController.clear(),
-                    ),
-                    hintText: '自定义',
-                    border: const OutlineInputBorder(
-                      gapPadding: 50,
-                    ),
-                  ),
-                ),
-              ),
+            ITextField(
+              controller: bloc.checkController,
+              width: 200,
+              height: 35,
+              maxLines: 1,
             ),
             VariousStatelessButton(
               onPressed: () {},
@@ -230,23 +129,20 @@ class SiteCertificateView extends StatelessWidget {
     return ChangeNotifierProvider<PagesScope>.value(
       value: bloc.pageScope,
       child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return rowTextList(
+        return const ITextListCell(
           title: "网站证书",
           children: [
             ITextRadio(
               value: HttpOptions.option1,
               title: "单http",
-              bloc: bloc,
             ),
             ITextRadio(
               value: HttpOptions.option2,
               title: "单https",
-              bloc: bloc,
             ),
             ITextRadio(
               value: HttpOptions.option3,
               title: "混合模式",
-              bloc: bloc,
             ),
           ],
         );
@@ -265,7 +161,7 @@ class SiteConfigurationView extends StatelessWidget {
     return ChangeNotifierProvider<PagesScope>.value(
       value: bloc.pageScope,
       child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return rowTextList(
+        return ITextListCell(
             title: "网站配置",
             children: bloc.configureList
                 .map(
@@ -320,28 +216,22 @@ class SiteConfigurationView extends StatelessWidget {
 ///解析ip
 class SiteAnalysisIpView extends StatelessWidget {
   const SiteAnalysisIpView({super.key});
+
   @override
   Widget build(BuildContext context) {
     var bloc = Provider.of<SiteSettingsBloc>(context);
     return ChangeNotifierProvider<PagesScope>.value(
       value: bloc.pageScope,
       child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return rowTextList(title: "解析ip", children: [
-          SizedBox(
+        return ITextListCell(title: "解析ip", children: [
+
+          ITextField(
             width: 200,
             height: 35,
-            child: TextField(
-              controller: bloc.analysisController,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 8, left: 5),
-                hintText: '自定义',
-                border: OutlineInputBorder(
-                  gapPadding: 50,
-                ),
-              ),
-            ),
+            controller: bloc.analysisController,
+            maxLines: 1,
           ),
-          iCheckbox(
+          ICheckbox(
             value: bloc.automaticParsing,
             maxWidth: 98,
             onChanged: (value) => bloc.onAutomaticParsing(value),
@@ -349,16 +239,16 @@ class SiteAnalysisIpView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: expensiveButton(
-              "重新解析",
-              CupertinoIcons.gobackward,
-              () => bloc.onReanalysis,
+            child: ExpensiveButtonCell(
+              title: "重新解析",
+              icon: CupertinoIcons.gobackward,
+              onPressed: () => bloc.onReanalysis,
             ),
           ),
-          expensiveButton(
-            "效验解析",
-            CupertinoIcons.checkmark_alt_circle,
-            () => bloc.onValidationAnalysis,
+          ExpensiveButtonCell(
+            title: "效验解析",
+            icon: CupertinoIcons.checkmark_alt_circle,
+            onPressed: () => bloc.onValidationAnalysis,
           ),
         ]);
       }),
@@ -369,13 +259,14 @@ class SiteAnalysisIpView extends StatelessWidget {
 ///文件格式
 class SiteFileFormatView extends StatelessWidget {
   const SiteFileFormatView({super.key});
+
   @override
   Widget build(BuildContext context) {
     var bloc = Provider.of<SiteSettingsBloc>(context);
     return ChangeNotifierProvider<PagesScope>.value(
       value: bloc.pageScope,
       child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return rowTextList(
+        return ITextListCell(
           title: "文件格式",
           children: bloc.fileFormatList
               .map(
@@ -417,22 +308,17 @@ class SiteClonedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return rowTextList(title: "克隆网站", children: [
-      Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15).copyWith(left: 0),
-        padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
+    var bloc = Provider.of<SiteSettingsBloc>(context);
+    return ITextListCell(title: "克隆网站", children: [
+      ITextField(
         width: width * 0.15,
-        constraints: const BoxConstraints(minWidth: 200),
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(31, 189, 189, 189),
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            width: 0.5,
-            color: const Color.fromARGB(31, 54, 54, 54),
-          ),
-        ),
-        child: const Text("test22.com"),
+        height: 35,
+        enabled: false,
+        maxLines: 1,
+        hintText: "test22.com",
+        controller: bloc.analysisController,
       ),
+
       const ITooltip(
         message: "123456",
         size: 18,
@@ -480,27 +366,19 @@ class SiteCompanyView extends StatelessWidget {
       value: bloc.pageScope,
       child: Consumer<PagesScope>(
         builder: (_, scope, __) {
-          return rowTextList(
+          return ITextListCell(
             title: "企业名称",
             children: [
-              SizedBox(
+              ITextField(
                 width: 300,
                 height: 35,
-                child: TextField(
-                  controller: bloc.controllerOutlined,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.only(top: 8, left: 5),
-                    hintText: '自定义',
-                    border: OutlineInputBorder(
-                      gapPadding: 50,
-                    ),
-                  ),
-                ),
+                maxLines: 1,
+                controller: bloc.controllerOutlined,
               ),
-              expensiveButton(
-                "自动企业名称",
-                CupertinoIcons.gobackward,
-                () {},
+              ExpensiveButtonCell(
+                icon: CupertinoIcons.gobackward,
+                title: "自动企业名称",
+                onPressed: () {},
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 6, left: 10),
@@ -523,60 +401,139 @@ class SiteCompanyView extends StatelessWidget {
   }
 }
 
-///首页标题
-class SiteHomeTitleView extends StatelessWidget {
-  const SiteHomeTitleView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var bloc = Provider.of<SiteSettingsBloc>(context);
-    return SiteTextField(
-      title: '首页标题',
-      innerTitle: '内页标题',
-      controller: bloc.titlecontroller,
-      controllerInner: bloc.innerTitleController,
-    );
-  }
-}
-
-///首页关键词
-class SiteHomeKeywordView extends StatelessWidget {
-  const SiteHomeKeywordView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var bloc = Provider.of<SiteSettingsBloc>(context);
-    return SiteTextField(
-      title: '首页关键词',
-      innerTitle: '内页关键词',
-      controller: bloc.keyworController,
-      controllerInner: bloc.innerKeywordController,
-    );
-  }
-}
-
 ///首页描述
 class SiteHomeDescriptionView extends StatelessWidget {
   const SiteHomeDescriptionView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var bloc = Provider.of<SiteSettingsBloc>(context);
-    return SiteTextField(
-      title: '首页描述',
-      innerTitle: '内页描述',
-      controller: bloc.descriptController,
-      controllerInner: bloc.innerDescriptController,
+    return const Column(
+      children: [
+        ITextFieldCell(
+          title: '首页标题',
+          innerTitle: '内页标题',
+        ),
+        ITextFieldCell(
+          title: '首页关键词',
+          innerTitle: '内页关键词',
+        ),
+        ITextFieldCell(
+          title: '首页描述',
+          innerTitle: '内页描述',
+        ),
+      ],
+    );
+  }
+}
+
+///布局方式
+class ITextListCell extends StatelessWidget {
+  const ITextListCell({super.key, required this.title, required this.children});
+
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 100,
+            padding: const EdgeInsets.only(top: 4, right: 10),
+            alignment: Alignment.centerRight,
+            child: Text(
+              "$title：",
+              style: const TextStyle(
+                color: Color.fromARGB(129, 4, 24, 14),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 9,
+            child: Wrap(
+              spacing: 4, // 横向间距
+              runSpacing: 10, //纵向间距
+              children: children,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+///checkbox按钮
+class ICheckbox extends StatelessWidget {
+  const ICheckbox({
+    super.key,
+    this.value,
+    this.onChanged,
+    this.title,
+    this.maxWidth,
+  });
+
+  final bool? value;
+  final void Function(bool?)? onChanged;
+  final String? title;
+  final double? maxWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: maxWidth ?? 85, maxHeight: 34),
+      child: CheckboxMenuButton(
+        value: value,
+        onChanged: onChanged,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 2),
+          child: Text(
+            title ?? '',
+            style: TextStyle(color: value! ? Colors.blue : Colors.black),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+///橙色动态按钮
+class ExpensiveButtonCell extends StatelessWidget {
+  const ExpensiveButtonCell(
+      {super.key, required this.title, this.icon, required this.onPressed});
+
+  final String title;
+  final IconData? icon;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IExpensiveButtons(
+      icon: icon,
+      title: title,
+      onPressed: onPressed,
+      selectBackgroundColor: const Color.fromARGB(183, 255, 148, 9),
+      selectIconColor: Colors.white,
+      selectLabelColor: Colors.white,
+      uncheckBackgroundColor: const Color.fromARGB(255, 253, 242, 228),
+      uncheckIconColor: const Color.fromARGB(183, 255, 148, 9),
+      uncheckLabelColor: const Color.fromARGB(183, 255, 148, 9),
+      iconSize: 15,
     );
   }
 }
 
 ///
 class ITextRadio extends StatelessWidget {
-  const ITextRadio(
-      {super.key, this.title, required this.value, required this.bloc});
+  const ITextRadio({
+    super.key,
+    this.title,
+    required this.value,
+  });
 
-  final SiteSettingsBloc bloc;
   final String? title;
   final dynamic value;
 
@@ -600,95 +557,177 @@ class ITextRadio extends StatelessWidget {
   }
 }
 
-///
-class SiteTextField extends StatelessWidget {
-  const SiteTextField(
-      {super.key,
-      required this.title,
-      this.controller,
-      required this.innerTitle,
-      this.controllerInner});
-  final String title;
-  final String innerTitle;
-  final TextEditingController? controller;
-  final TextEditingController? controllerInner;
+class ITextFieldCell extends StatefulWidget {
+  const ITextFieldCell({super.key, this.title, this.innerTitle});
+
+  final String? title;
+  final String? innerTitle;
+
+  @override
+  State<ITextFieldCell> createState() => _ITextFieldCellState();
+}
+
+class _ITextFieldCellState extends State<ITextFieldCell> {
+  TextEditingController controller = TextEditingController();
+  TextEditingController innerController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    return rowTextList(title: title, children: [
-      SizedBox(
-        width: width * 0.35 * 0.56,
-        child: TextField(
-          controller: controller,
-          maxLines: 5,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.only(top: 8, left: 5),
-            hintText: '自定义',
-            border: OutlineInputBorder(
-              gapPadding: 50,
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Wrap(
+        spacing: 4, // 横向间距
+        runSpacing: 10, //纵向间距
+        children: [
+          IRowCell(
+            title: widget.title,
+            controller: controller,
+          ),
+          IInnerRowCell(
+            innerTitle: widget.innerTitle,
+            controller: innerController,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class IRowCell extends StatelessWidget {
+  const IRowCell({
+    super.key,
+    this.title,
+    this.controller,
+  });
+
+  final TextEditingController? controller;
+  final String? title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 100,
+          padding: const EdgeInsets.only(top: 2, right: 10),
+          alignment: Alignment.centerRight,
+          child: Text(
+            "$title：",
+            style: const TextStyle(
+              color: Color.fromARGB(129, 4, 24, 14),
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
-      ),
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 25, right: 15),
-            child: Column(
-              children: [
-                Text(
-                  "$innerTitle:",
-                  style: const TextStyle(
-                    color: Color.fromARGB(129, 4, 24, 14),
-                    fontWeight: FontWeight.bold,
-                  ),
+        ITextField(
+          controller: controller,
+        ),
+      ],
+    );
+  }
+}
+
+class IInnerRowCell extends StatelessWidget {
+  const IInnerRowCell({
+    super.key,
+    this.innerTitle,
+    this.controller,
+  });
+
+  final TextEditingController? controller;
+  final String? innerTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          alignment: Alignment.centerRight,
+          width: 100,
+          padding: const EdgeInsets.only(top: 2, right: 10),
+          child: Column(
+            children: [
+              Text(
+                "$innerTitle：",
+                style: const TextStyle(
+                  color: Color.fromARGB(129, 4, 24, 14),
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
                   "随机取几个",
                   style: TextStyle(
                     color: Color.fromARGB(255, 100, 39, 141),
                     fontSize: 13,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 12),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                  width: 60,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(31, 189, 189, 189),
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                      width: 0.5,
-                      color: const Color.fromARGB(31, 54, 54, 54),
-                    ),
-                  ),
-                  child: const Text("6"),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: width * 0.35 * 0.56,
-            child: TextField(
-              controller: controllerInner,
-              maxLines: 5,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 8, left: 5),
-                hintText: '自定义',
-                border: OutlineInputBorder(
-                  gapPadding: 50,
-                ),
               ),
-            ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                width: 60,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(31, 189, 189, 189),
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(
+                    width: 0.5,
+                    color: const Color.fromARGB(31, 54, 54, 54),
+                  ),
+                ),
+                child: const Text("6"),
+              ),
+            ],
           ),
-        ],
+        ),
+        ITextField(
+          controller: controller,
+        ),
+      ],
+    );
+  }
+}
+
+class ITextField extends StatelessWidget {
+  const ITextField(
+      {super.key,
+      this.controller,
+      this.width,
+      this.height,
+      this.maxLines = 5,
+      this.hintText = '自定义',
+      this.enabled});
+
+  final String? hintText;
+  final TextEditingController? controller;
+  final double? width;
+  final double? height;
+  final int? maxLines;
+  final bool? enabled;
+
+  @override
+  Widget build(BuildContext context) {
+    var widths = MediaQuery.of(context).size.width;
+    return SizedBox(
+      width: width ?? widths * 0.4 * 0.5,
+      height: height,
+      child: TextField(
+        controller: controller,
+        maxLines: maxLines,
+        enabled: enabled,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(top: 8, left: 5),
+          hintText: hintText,
+          border: const OutlineInputBorder(
+            gapPadding: 50,
+          ),
+        ),
       ),
-    ]);
+    );
   }
 }

@@ -13,14 +13,22 @@ import 'package:web_flutter/view-seo/seo-home/src/models/seo_servers_model.dart'
 import 'package:web_flutter/view-seo/seo-home/src/pages/seo_domain_page.dart';
 import 'package:web_flutter/view-seo/seo-home/src/pages/seo_home_page.dart';
 import 'package:web_flutter/view-seo/seo-home/src/pages/seo_tabbar_page.dart';
+import 'package:web_flutter/view-seo/site-inclusion/src/blocs/inclusion_bloc.dart';
 import 'package:web_flutter/view-seo/site-management/site_management.dart';
 import '../../view-pages/view.dart';
+import '../../view-seo/site-inclusion/src/pages/inclusion_page.dart';
 
 final GlobalKey<NavigatorState> rootNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> pageNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> pageaNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> serverNavKey = GlobalKey<NavigatorState>();
+
+///网站收录
+final GlobalKey<NavigatorState> inclusionNavKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> inclusionViewNavKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> inclusionTabNavKey =
+    GlobalKey<NavigatorState>();
 
 class AppRouters {
   /// 用于路径路由(声明式路由)的常量, 路径不包含参数
@@ -48,12 +56,17 @@ class AppRouters {
   static const String advertisingNamed = "/advertising";
   static const String templateNamed = "/template";
 
+  ///网站收录
+  static const String siteInclusionPath = "/site_inclusion";
+  static const String siteInclusionNamed = "site_inclusion";
+
   static const String siteSettings1Path = "/site_settin";
   static const String siteSettings1Named = "site_settin";
 
   static GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
-    initialLocation: homePath, // 默认路由, 不指定这一荐时，默认路由为 '/'
+    initialLocation: homePath,
+    // 默认路由, 不指定这一荐时，默认路由为 '/'
     routes: [
       goRoute(
         // 不传递参数的路由项
@@ -138,6 +151,78 @@ class AppRouters {
                         child: Provider<TemplateCodeBloc>(
                           create: (_) => TemplateCodeBloc(),
                           child: const TemplateCodePage(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+                builder: (context, state, child) {
+                  final index = state.queryParameters["serverId"];
+                  DomainNameModel args;
+                  if (state.extra == null) {
+                    var model = DomainNameModel(
+                      "",
+                      NavigationDrawerType.http,
+                      "",
+                    );
+                    args = model;
+                  } else {
+                    args = state.extra as DomainNameModel;
+                  }
+                  int id = int.parse(index ?? "0");
+                  return Provider<SEOTabBarBloc>(
+                    create: (_) => SEOTabBarBloc(),
+                    child: SEOTabBarPage(
+                      state: state,
+                      id: id,
+                      model: args,
+                      child: child,
+                    ),
+                  );
+                },
+              ),
+            ],
+            pageBuilder: (context, state, child) {
+              final args = state.queryParameters["serverId"];
+              int id = int.parse(args ?? "0");
+              return CustomTransitionPage<void>(
+                key: state.pageKey,
+                child: Provider<SEODomainBloc>(
+                  create: (_) => SEODomainBloc(),
+                  child: SEODomainPage(
+                    state: state,
+                    id: id,
+                    child: child,
+                  ),
+                ),
+                transitionDuration: const Duration(milliseconds: 50),
+                transitionsBuilder: (BuildContext context,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    Widget child) {
+                  return FadeTransition(
+                    opacity:
+                        CurveTween(curve: Curves.easeInOut).animate(animation),
+                    child: child,
+                  );
+                },
+              );
+            },
+          ),
+          ShellRoute(
+            navigatorKey: inclusionNavKey,
+            routes: [
+              ShellRoute(
+                navigatorKey: inclusionTabNavKey,
+                routes: [
+                  GoRoute(
+                    path: siteInclusionPath,
+                    name: siteInclusionNamed,
+                    pageBuilder: (context, state) {
+                      return NoTransitionPage(
+                        child: Provider<InclusionBloc>(
+                          create: (_) => InclusionBloc(),
+                          child: const InclusionPage(),
                         ),
                       );
                     },

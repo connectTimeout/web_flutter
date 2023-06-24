@@ -20,7 +20,7 @@ class SEOHomeBloc with BodyMixin {
           queryParameters: queryParameters,
         ),
         ITabBarModel(
-          AppRouters.siteSettings1Named,
+          AppRouters.siteInclusionNamed,
           title: "返回主页",
           icon: Icons.home_sharp,
           queryParameters: queryParameters,

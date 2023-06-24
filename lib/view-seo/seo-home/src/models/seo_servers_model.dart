@@ -48,3 +48,13 @@ class TextButtonModel {
   final String value;
   final VoidCallback onPressed;
 }
+///快捷链接模型
+class QuickLinkModel {
+  final VoidCallback? onPressed;
+  final String? title;
+
+  QuickLinkModel({
+    this.title,
+    this.onPressed,
+  });
+}

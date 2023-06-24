@@ -8,6 +8,7 @@ class SiteSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SiteButtonView(),
           SiteDomainView(),
@@ -17,9 +18,7 @@ class SiteSettingsPage extends StatelessWidget {
           SiteFileFormatView(),
           SiteClonedView(),
           SiteCompanyView(),
-          SiteHomeTitleView(),
-          SiteHomeKeywordView(),
-          SiteHomeDescriptionView()
+          SiteHomeDescriptionView(),
         ],
       ),
     );
