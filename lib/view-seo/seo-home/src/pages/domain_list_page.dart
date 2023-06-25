@@ -4,29 +4,27 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/routers/routers.dart';
-import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_domain_bloc.dart';
+import 'package:web_flutter/view-seo/seo-home/src/blocs/domain_list_bloc.dart';
 import 'package:web_flutter/view-seo/seo-home/src/models/i_tab_list_cell.dart';
 import 'package:web_flutter/view-seo/seo-home/src/models/seo_servers_model.dart';
 
-class SEODomainPage extends StatelessWidget {
-  const SEODomainPage({
+class DomainListPage extends StatelessWidget {
+  const DomainListPage({
     super.key,
     required this.state,
     required this.child,
     required this.id,
-    this.isView,
     this.routerNamed,
   });
 
   final GoRouterState state;
   final Widget child;
   final int id;
-  final bool? isView;
   final String? routerNamed;
 
   @override
   Widget build(BuildContext context) {
-    var bloc = Provider.of<SEODomainBloc>(context);
+    var bloc = Provider.of<DomainListBloc>(context);
     List<DomainNameModel>? domainList = bloc.domainMap[id];
     return ChangeNotifierProvider<PagesScope>.value(
       value: bloc.pageScope,
@@ -51,7 +49,7 @@ class SEODomainPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const IExpensiveButtons(
-                              title: '网站列表',
+                              title: '网站列表1',
                               icon: CupertinoIcons.doc_plaintext,
                             ),
                             IExpensiveButtons(
@@ -89,11 +87,11 @@ class SEODomainPage extends StatelessWidget {
                         itemBuilder: (context, ind) {
                           int index = ind;
                           return ITabListCell(
-                              isView: isView ?? false,
+                              isView: false,
                               domainModel: domainList![ind],
-                              isSelect: index == bloc.selectIndex,
+                              isSelect: index == bloc.domainIndex,
                               onTap: () {
-                                bloc.selectIndex = index;
+                                bloc.domainIndex = index;
                                 context.goNamed(
                                     routerNamed ?? AppRouters.siteSettingsNamed,
                                     extra: domainList[index],
@@ -108,10 +106,54 @@ class SEODomainPage extends StatelessWidget {
                   ],
                 )),
             Expanded(
-              child: SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 3),
-                  child: child,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 3),
+                child: Container(
+                  height: MediaQuery.of(context).size.height - 85,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 10,
+                  ).copyWith(bottom: 1),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 209, 209, 209),
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: bloc.tabNameList.length,
+                          itemBuilder: (context, index) {
+                            var tabModel = bloc.tabNameList[index];
+                            return ITextTabBarCell(
+                              title: tabModel.title,
+                              isSelect: index == bloc.tabIndex,
+                              onPressed: () => bloc.onPressed(
+                                context,
+                                index,
+                                id,
+                                tabModel,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: ColoredBox(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: child,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

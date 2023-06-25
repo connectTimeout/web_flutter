@@ -9,16 +9,6 @@ class SEOTabBarBloc with BodyMixin {
 
   PagesScope pageScope = PagesScope();
   List<SEOTabBarModel>? list;
-  List<Tab> get homeLists {
-    return [
-      tabs(title: "网站设置"),
-      tabs(title: "友情链接"),
-      tabs(title: "广告设置"),
-      tabs(title: "统计代码"),
-      tabs(title: "模版代码"),
-      tabs(title: "Nainx配置"),
-    ];
-  }
 
   List<SEOTabBarModel> tabNameList = [
     SEOTabBarModel(AppRouters.siteSettingsNamed, title: "网站设置"),

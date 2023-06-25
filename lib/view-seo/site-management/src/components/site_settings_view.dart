@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
-import 'package:web_flutter/utils/src/img_asset.dart';
 import 'package:web_flutter/view-seo/statistics/statistics.dart';
 
 /// 按钮"开启反审查" : "关闭反审查""禁用站点",
@@ -125,28 +124,22 @@ class SiteCertificateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = Provider.of<SiteSettingsBloc>(context);
-    return ChangeNotifierProvider<PagesScope>.value(
-      value: bloc.pageScope,
-      child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return const ITextListCell(
-          title: "网站证书",
-          children: [
-            ITextRadio(
-              value: HttpOptions.option1,
-              title: "单http",
-            ),
-            ITextRadio(
-              value: HttpOptions.option2,
-              title: "单https",
-            ),
-            ITextRadio(
-              value: HttpOptions.option3,
-              title: "混合模式",
-            ),
-          ],
-        );
-      }),
+    return const ITextListCell(
+      title: "网站证书",
+      children: [
+        ITextRadio(
+          value: HttpOptions.option1,
+          title: "单http",
+        ),
+        ITextRadio(
+          value: HttpOptions.option2,
+          title: "单https",
+        ),
+        ITextRadio(
+          value: HttpOptions.option3,
+          title: "混合模式",
+        ),
+      ],
     );
   }
 }
@@ -224,7 +217,6 @@ class SiteAnalysisIpView extends StatelessWidget {
       value: bloc.pageScope,
       child: Consumer<PagesScope>(builder: (_, scope, __) {
         return ITextListCell(title: "解析ip", children: [
-
           ITextField(
             width: 200,
             height: 35,
@@ -318,7 +310,6 @@ class SiteClonedView extends StatelessWidget {
         hintText: "test22.com",
         controller: bloc.analysisController,
       ),
-
       const ITooltip(
         message: "123456",
         size: 18,
@@ -428,10 +419,17 @@ class SiteHomeDescriptionView extends StatelessWidget {
 
 ///布局方式
 class ITextListCell extends StatelessWidget {
-  const ITextListCell({super.key, required this.title, required this.children});
+  const ITextListCell(
+      {super.key,
+      required this.title,
+      required this.children,
+      this.padding,
+      this.width});
 
   final String title;
   final List<Widget> children;
+  final EdgeInsetsGeometry? padding;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -441,7 +439,7 @@ class ITextListCell extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 100,
+            width: width ?? 100,
             padding: const EdgeInsets.only(top: 4, right: 10),
             alignment: Alignment.centerRight,
             child: Text(
@@ -540,19 +538,24 @@ class ITextRadio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bloc = Provider.of<SiteSettingsBloc>(context);
-    return Padding(
-      padding: const EdgeInsets.only(right: 15),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Radio(
-            value: value,
-            groupValue: bloc.groupValueOption,
-            onChanged: (value) => bloc.onChanged(value),
+    return ChangeNotifierProvider<PagesScope>.value(
+      value: bloc.pageScope,
+      child: Consumer<PagesScope>(builder: (_, scope, __) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 15),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Radio(
+                value: value,
+                groupValue: bloc.groupValueOption,
+                onChanged: (value) => bloc.onChanged(value),
+              ),
+              Text(title ?? ''),
+            ],
           ),
-          Text(title ?? ''),
-        ],
-      ),
+        );
+      }),
     );
   }
 }

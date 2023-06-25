@@ -26,7 +26,7 @@ class SEOHomeBloc with BodyMixin {
           queryParameters: queryParameters,
         ),
         ITabBarModel(
-          AppRouters.siteSettings1Named,
+          AppRouters.overviewNamed,
           title: "返回主页",
           icon: Icons.home_sharp,
           queryParameters: queryParameters,
@@ -38,7 +38,7 @@ class SEOHomeBloc with BodyMixin {
           queryParameters: queryParameters,
         ),
         ITabBarModel(
-          "soepage4",
+          AppRouters.parametersNamed,
           title: "返回主页",
           icon: Icons.home_sharp,
           queryParameters: queryParameters,

@@ -351,7 +351,7 @@ class _ITextButtonState extends State<ITextButton> {
   }
 }
 
-class ITextTabBarCell extends StatefulWidget {
+class ITextTabBarCell extends StatelessWidget {
   const ITextTabBarCell({
     this.title,
     this.onPressed,
@@ -362,18 +362,12 @@ class ITextTabBarCell extends StatefulWidget {
   final String? title;
   final void Function()? onPressed;
   final bool isSelect;
-
-  @override
-  State<ITextTabBarCell> createState() => _ITextTabBarCellState();
-}
-
-class _ITextTabBarCellState extends State<ITextTabBarCell> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 5),
       child: InkWell(
-        onTap: widget.onPressed,
+        onTap: onPressed,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
@@ -381,7 +375,7 @@ class _ITextTabBarCellState extends State<ITextTabBarCell> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: !widget.isSelect
+              colors: !isSelect
                   ? [
                       Colors.white12,
                       Colors.white38,
@@ -396,7 +390,7 @@ class _ITextTabBarCellState extends State<ITextTabBarCell> {
             ),
           ),
           child: Text(
-            widget.title ?? "-",
+            title ?? "-",
             style: const TextStyle(color: Colors.blue, fontSize: 15),
           ),
         ),

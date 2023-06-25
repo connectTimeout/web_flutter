@@ -11,12 +11,14 @@ class ITabListCell extends StatelessWidget {
       this.onTap,
       this.isSelect = false,
       required this.domainModel,
-      this.onPressed});
+      this.onPressed,
+      this.isView = false});
 
   final VoidCallback? onTap;
   final bool isSelect;
   final DomainNameModel domainModel;
   final VoidCallback? onPressed;
+  final bool isView;
 
   @override
   Widget build(BuildContext context) {
@@ -61,26 +63,28 @@ class ITabListCell extends StatelessWidget {
                 ),
               ),
             ),
-            const Expanded(child: SizedBox()),
-            typeValue(domainModel.type),
-            domainModel.type == NavigationDrawerType.failure
-                ? ITooltip(
-                    message: domainModel.message ?? '',
-                    icon: Icons.alarm,
-                    color: Colors.amber,
-                  )
-                : ITooltip(
-                    message: domainModel.message ?? '',
-                  ),
-            SizedBox(
-              height: 27,
-              child: VariousStatelessButton(
-                onPressed: onPressed,
-                color: Colors.red,
-                textColor: Colors.white,
-                title: "删除",
+            if (isView) ...[
+              const Expanded(child: SizedBox()),
+              typeValue(domainModel.type),
+              domainModel.type == NavigationDrawerType.failure
+                  ? ITooltip(
+                      message: domainModel.message ?? '',
+                      icon: Icons.alarm,
+                      color: Colors.amber,
+                    )
+                  : ITooltip(
+                      message: domainModel.message ?? '',
+                    ),
+              SizedBox(
+                height: 27,
+                child: VariousStatelessButton(
+                  onPressed: onPressed,
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  title: "删除",
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),

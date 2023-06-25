@@ -239,7 +239,7 @@ class _IHomeCellState extends State<IHomeCell> {
   void onss(int index, int id) async {
     var sp = await SpUtil.getInstance();
     await sp?.putInt("serverIndex", index);
-    await sp?.putInt("serverIndex", id);
+    await sp?.putInt("domainId", id);
   }
 
   Widget _generateExpansionTileWidget(
