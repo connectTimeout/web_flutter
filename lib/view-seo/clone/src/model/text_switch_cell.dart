@@ -19,26 +19,53 @@ class TextSwitchCell extends StatefulWidget {
 class _TextSwitchCellState extends State<TextSwitchCell> {
   bool values = true;
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     values = widget.value;
-    return Row(
-      children: [
-        Text("${widget.title}："),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Switch(
-              value: values,
-              onChanged: (value) {
-                setState(() {
-                  values = value;
-                });
-              }),
-        ),
-        ITooltip(
-          message: widget.message ?? "",
-          size: 18,
-        ),
-      ],
+    super.initState();
+  }
+
+  final MaterialStateProperty<Icon?> thumbIcon =
+      MaterialStateProperty.resolveWith<Icon?>((states) {
+    if (states.contains(MaterialState.selected)) {
+      return const Icon(
+        Icons.check,
+        size: 15,
+      );
+    }
+    return const Icon(
+      Icons.close,
+      size: 15,
+    );
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Text("${widget.title}："),
+          ),
+          Transform.scale(
+            scale: 0.7,
+            child: Switch(
+                thumbIcon: thumbIcon,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                value: values,
+                onChanged: (value) {
+                  setState(() {
+                    values = value;
+                  });
+                }),
+          ),
+          ITooltip(
+            message: widget.message ?? "",
+            size: 18,
+          ),
+        ],
+      ),
     );
   }
 }

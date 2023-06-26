@@ -5,6 +5,8 @@ import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
 import 'package:web_flutter/view-seo/statistics/statistics.dart';
 
+import 'model.dart';
+
 /// 按钮"开启反审查" : "关闭反审查""禁用站点",
 class SiteButtonView extends StatelessWidget {
   const SiteButtonView({super.key});
@@ -89,7 +91,7 @@ class SiteDomainView extends StatelessWidget {
             ),
             ICheckbox(
               value: bloc.isChecked,
-              maxWidth: 55,
+              maxWidth: 60,
               onChanged: bloc.onChangedChanged,
               title: "@",
             ),
@@ -248,9 +250,13 @@ class SiteAnalysisIpView extends StatelessWidget {
   }
 }
 
+FileFormatOptions fileFormatOptions = FileFormatOptions.option1;
+
 ///文件格式
 class SiteFileFormatView extends StatelessWidget {
-  const SiteFileFormatView({super.key});
+  const SiteFileFormatView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -260,10 +266,9 @@ class SiteFileFormatView extends StatelessWidget {
       child: Consumer<PagesScope>(builder: (_, scope, __) {
         return ITextListCell(
           title: "文件格式",
-          children: bloc.fileFormatList
+          children: fileFormatList
               .map(
-                (e) => radioFileList(
-                  bloc,
+                (e) => IRadioFileList(
                   value: e.type,
                   title: e.title,
                 ),
@@ -271,24 +276,6 @@ class SiteFileFormatView extends StatelessWidget {
               .toList(),
         );
       }),
-    );
-  }
-
-  Widget radioFileList(SiteSettingsBloc bloc,
-      {required value, required String title}) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 15),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Radio(
-            value: value,
-            groupValue: bloc.fileFormatOptions,
-            onChanged: null,
-          ),
-          Text(title),
-        ],
-      ),
     );
   }
 }
@@ -419,35 +406,44 @@ class SiteHomeDescriptionView extends StatelessWidget {
 
 ///布局方式
 class ITextListCell extends StatelessWidget {
-  const ITextListCell(
-      {super.key,
-      required this.title,
-      required this.children,
-      this.padding,
-      this.width});
+  const ITextListCell({
+    super.key,
+    required this.title,
+    required this.children,
+    this.padding,
+    this.width,
+    this.alignment,
+    this.titleColor,
+    this.isfontWeight = false,
+  });
 
   final String title;
+  final Color? titleColor;
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final double? width;
+  final AlignmentGeometry? alignment;
+  final bool isfontWeight;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: padding ?? const EdgeInsets.only(top: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: width ?? 100,
             padding: const EdgeInsets.only(top: 4, right: 10),
-            alignment: Alignment.centerRight,
+            alignment: alignment ?? Alignment.centerRight,
             child: Text(
               "$title：",
-              style: const TextStyle(
-                color: Color.fromARGB(129, 4, 24, 14),
-                fontWeight: FontWeight.bold,
-              ),
+              style: isfontWeight
+                  ? null
+                  : const TextStyle(
+                      color: Color.fromARGB(129, 4, 24, 14),
+                      fontWeight: FontWeight.bold,
+                    ),
             ),
           ),
           Expanded(
@@ -481,18 +477,23 @@ class ICheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: maxWidth ?? 85, maxHeight: 34),
-      child: CheckboxMenuButton(
-        value: value,
-        onChanged: onChanged,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 2),
-          child: Text(
-            title ?? '',
-            style: TextStyle(color: value! ? Colors.blue : Colors.black),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Checkbox(
+            value: value,
+            onChanged: onChanged,
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Text(
+              title ?? '',
+              style: TextStyle(color: value! ? Colors.blue : Colors.black),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -733,4 +734,57 @@ class ITextField extends StatelessWidget {
       ),
     );
   }
+}
+
+class IRadioFileList extends StatelessWidget {
+  const IRadioFileList({
+    super.key,
+    this.value,
+    required this.title,
+    this.isRadio = false,
+    this.onChanged,
+  });
+  final dynamic value;
+  final String title;
+  final bool isRadio;
+  final ValueChanged<dynamic>? onChanged;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 15),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio(
+            value: value,
+            groupValue: fileFormatOptions,
+            onChanged: isRadio ? onChanged : null,
+          ),
+          Text(title),
+        ],
+      ),
+    );
+  }
+}
+
+Widget radioFileList({
+  required value,
+  required String title,
+  bool isRadio = false,
+  final ValueChanged<dynamic>? onChanged,
+}) {
+  return Padding(
+    padding: const EdgeInsets.only(right: 15),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Radio(
+          value: value,
+          groupValue: fileFormatOptions,
+          onChanged: isRadio ? onChanged : null,
+        ),
+        Text(title),
+      ],
+    ),
+  );
 }

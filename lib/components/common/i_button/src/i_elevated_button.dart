@@ -265,6 +265,7 @@ class ITextButton extends StatefulWidget {
     this.isIcon = false,
     Key? key,
     this.color = Colors.transparent,
+    this.padding,
   }) : super(key: key);
 
   final String? title;
@@ -273,6 +274,7 @@ class ITextButton extends StatefulWidget {
   final bool isSelect;
   final Color color;
   final bool isIcon;
+  final EdgeInsetsGeometry? padding;
 
   @override
   State<ITextButton> createState() => _ITextButtonState();
@@ -291,6 +293,10 @@ class _ITextButtonState extends State<ITextButton> {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: TextButton(
         style: ElevatedButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+            ),
+            padding: widget.padding,
             backgroundColor: widget.isSelect
                 ? Colors.greenAccent
                 : onHover

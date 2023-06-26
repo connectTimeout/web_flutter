@@ -35,7 +35,7 @@ class StatisticsCell extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 10),
                   color: const Color.fromARGB(255, 7, 15, 24),
                   width: double.infinity,
-                  height: 5000,
+                  height: 2000,
                 )
               ],
             ),

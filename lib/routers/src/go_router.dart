@@ -8,8 +8,10 @@ import 'package:web_flutter/view-login/src/pages/error_page.dart';
 import 'package:web_flutter/view-login/src/pages/login_page.dart';
 import 'package:web_flutter/view-seo/clone/src/blocs/configuration_bloc.dart';
 import 'package:web_flutter/view-seo/clone/src/blocs/parameters_bloc.dart';
+import 'package:web_flutter/view-seo/clone/src/blocs/parameters_visible_bloc.dart';
 import 'package:web_flutter/view-seo/clone/src/pages/configuration_page.dart';
 import 'package:web_flutter/view-seo/clone/src/pages/parameters_page.dart';
+import 'package:web_flutter/view-seo/clone/src/pages/parameters_visible_page.dart';
 import 'package:web_flutter/view-seo/seo-home/src/blocs/domain_list_bloc.dart';
 import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_domain_bloc.dart';
 import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_home_bloc.dart';
@@ -100,6 +102,9 @@ class AppRouters {
 
   static const String siteSettings1Path = "/site_settin";
   static const String siteSettings1Named = "site_settin";
+
+  static const String parametersVisiblePath = "/parameters_visible";
+  static const String parametersVisibleNamed = "parameters_visible";
 
   static GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
@@ -396,6 +401,18 @@ class AppRouters {
                     child: Provider<ParametersBloc>(
                       create: (_) => ParametersBloc(),
                       child: const ParametersPage(),
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                path: parametersVisiblePath,
+                name: parametersVisibleNamed,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: Provider<ParametersVisibleBloc>(
+                      create: (_) => ParametersVisibleBloc(),
+                      child: const ParametersVisiblePage(),
                     ),
                   );
                 },

@@ -6,8 +6,8 @@ import 'package:web_flutter/view-seo/seo-home/seo_home.dart';
 
 class ConfigurationBloc with BodyMixin {
   List<SEOTabBarModel> tabNameList = [
-    SEOTabBarModel(AppRouters.siteSettingsNamed, title: "克隆参数"),
-    SEOTabBarModel(AppRouters.friendlyLinksNamed, title: "参数可见"),
+    SEOTabBarModel(AppRouters.parametersNamed, title: "克隆参数"),
+    SEOTabBarModel(AppRouters.parametersVisibleNamed, title: "参数可见"),
   ];
   int selectIndex = 0;
 

@@ -137,7 +137,7 @@ class _IHomeCellState extends State<IHomeCell> {
                         top: BorderSide.none,
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height - 80,
-                          width: 80,
+                          width: 70,
                           child: _generateExpansionTileWidget(
                             widget.serverList,
                             widget.apiName,
@@ -249,11 +249,15 @@ class _IHomeCellState extends State<IHomeCell> {
     int index = serverList?.length ?? 0;
     return ExpansionTile(
       initiallyExpanded: true,
-      title: Text(
-        "$index台",
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 15,
+      tilePadding: const EdgeInsets.all(0),
+      title: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: Text(
+          "$index台",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
         ),
       ),
       collapsedIconColor: Colors.white,
@@ -299,6 +303,7 @@ class _IHomeCellState extends State<IHomeCell> {
           title: title,
           onPressed: onPressed,
           isSelect: isSelect,
+          padding: const EdgeInsets.symmetric(horizontal: 5),
         ),
       ),
     );

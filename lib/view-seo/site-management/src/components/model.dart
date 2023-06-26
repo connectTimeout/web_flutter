@@ -1,3 +1,5 @@
+import 'package:web_flutter/consts/consts.dart';
+
 class ModelPage {
   final bool value;
   final String title;
@@ -15,3 +17,41 @@ class FileFormaModel {
   final dynamic type;
   FileFormaModel(this.title, this.type);
 }
+
+List<FileFormaModel> fileFormatList = [
+  FileFormaModel(
+    "html",
+    FileFormatOptions.option1,
+  ),
+  FileFormaModel(
+    "php",
+    FileFormatOptions.option2,
+  ),
+  FileFormaModel(
+    "jsp",
+    FileFormatOptions.option3,
+  ),
+  FileFormaModel(
+    "asp",
+    FileFormatOptions.option4,
+  ),
+  FileFormaModel(
+    "aspx",
+    FileFormatOptions.option5,
+  ),
+  FileFormaModel(
+    "shtml",
+    FileFormatOptions.option6,
+  ),
+];
+
+List<FileFormaModel> filePCList = [
+  FileFormaModel(
+    "PC",
+    FileFormatOptions.option1,
+  ),
+  FileFormaModel(
+    "手机",
+    FileFormatOptions.option2,
+  ),
+];
