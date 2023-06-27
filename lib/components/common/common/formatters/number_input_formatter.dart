@@ -20,16 +20,13 @@ class NumberInputFormatter extends TextInputFormatter {
   /// [isAllowDecimal]是否可以为小数,默认true
   /// [isAllowNegative]是否可以为负数,默认false
   NumberInputFormatter({
-    int? maxIntegerLength,
-    num? min,
-    num? max,
-    bool isAllowDecimal = true,
+    this.maxIntegerLength,
+    this.isAllowDecimal = true,
+    this.min,
+    this.max,
     this.maxDecimalLength = 2,
     this.isAllowNegative = false,
-  })  : maxIntegerLength = maxIntegerLength,
-        isAllowDecimal = isAllowDecimal,
-        min = min,
-        max = max;
+  });
 
   @override
   TextEditingValue formatEditUpdate(
@@ -66,7 +63,7 @@ class NumberInputFormatter extends TextInputFormatter {
         String beforePoint = value.substring(0, pointIndex);
         String afterPoint = value.substring(pointIndex + 1, value.length);
         // 小数点前面没内容补0
-        if (beforePoint.length == 0) {
+        if (beforePoint.isEmpty) {
           value = '0.$afterPoint';
           selectionIndex++;
         } else {

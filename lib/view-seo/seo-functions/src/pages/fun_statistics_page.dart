@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/view-seo/seo-functions/functions.dart';
-import 'package:web_flutter/view-seo/statistics/statistics.dart';
+import 'package:web_flutter/view-seo/seo-management/management.dart';
 
 class FunStatisticsPage extends StatelessWidget {
   const FunStatisticsPage({super.key});

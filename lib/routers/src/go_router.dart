@@ -3,28 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/common/constant.dart';
 import 'package:web_flutter/consts/consts.dart';
-import 'package:web_flutter/view-login/login.dart';
-import 'package:web_flutter/view-pages/src/home/src/home_page.dart';
-import 'package:web_flutter/view-login/src/pages/error_page.dart';
-import 'package:web_flutter/view-login/src/pages/login_page.dart';
-import 'package:web_flutter/view-seo/clone/src/blocs/configuration_bloc.dart';
-import 'package:web_flutter/view-seo/clone/src/blocs/parameters_bloc.dart';
-import 'package:web_flutter/view-seo/clone/src/blocs/parameters_visible_bloc.dart';
-import 'package:web_flutter/view-seo/clone/src/pages/configuration_page.dart';
-import 'package:web_flutter/view-seo/clone/src/pages/parameters_page.dart';
-import 'package:web_flutter/view-seo/clone/src/pages/parameters_visible_page.dart';
-import 'package:web_flutter/view-seo/seo-home/src/blocs/domain_list_bloc.dart';
-import 'package:web_flutter/view-seo/seo-home/src/pages/domain_list_page.dart';
+import 'package:web_flutter/view-pages/page.dart';
 import 'package:web_flutter/view-seo/seo.dart';
-import 'package:web_flutter/view-seo/site-inclusion/src/blocs/inclusion_bloc.dart';
-import 'package:web_flutter/view-seo/site-management/site_management.dart';
-import 'package:web_flutter/view-seo/spider/src/blocs/overview_bloc.dart';
-import 'package:web_flutter/view-seo/spider/src/pages/high_requency_page.dart';
-import 'package:web_flutter/view-seo/spider/src/pages/overview_page.dart';
-import 'package:web_flutter/view-seo/spider/src/pages/popular_url_page.dart';
-import 'package:web_flutter/view-seo/spider/src/pages/site_summary_page.dart';
-import 'package:web_flutter/view-seo/spider/src/pages/spider_statistics_page.dart';
-import '../../view-seo/site-inclusion/src/pages/inclusion_page.dart';
+import 'package:web_flutter/view-seo/seo-management/management.dart';
 
 final GlobalKey<NavigatorState> rootNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavKey = GlobalKey<NavigatorState>();
@@ -70,11 +51,11 @@ class AppRouters {
 
   ///named
   static const String siteSettingsNamed = "site_settings";
-  static const String friendlyLinksNamed = "/friendly_links";
-  static const String nginxConfigNamed = "/nainx_config";
-  static const String statisticsNamed = "/statistics";
-  static const String advertisingNamed = "/advertising";
-  static const String templateNamed = "/template";
+  static const String friendlyLinksNamed = "friendly_links";
+  static const String nginxConfigNamed = "nainx_config";
+  static const String statisticsNamed = "statistics";
+  static const String advertisingNamed = "advertising";
+  static const String templateNamed = "template";
 
   ///网站收录
   static const String siteInclusionPath = "/site_inclusion";

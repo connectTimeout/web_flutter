@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
-import 'package:web_flutter/view-seo/seo-functions/functions.dart';
 import 'package:web_flutter/view-seo/seo-management/management.dart';
 
-class FunLinkPage extends StatelessWidget {
-  const FunLinkPage({super.key});
+class FriendlyLinksPage extends StatelessWidget {
+  const FriendlyLinksPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var bloc = Provider.of<FunLinkBloc>(context);
+    var bloc = Provider.of<FriendlyLinksBloc>(context);
     return ChangeNotifierProvider<PagesScope>.value(
-      value: bloc.pageScope,
-      child: Consumer<PagesScope>(
-        builder: (context, scope, child) {
+        value: bloc.pageScope,
+        child: Consumer<PagesScope>(builder: (context, scope, child) {
           return StatisticsCell(
-            isSiteName: false,
             isChild: true,
             child: [
               ...bloc.linksList.map(
@@ -28,8 +25,6 @@ class FunLinkPage extends StatelessWidget {
               ),
             ],
           );
-        },
-      ),
-    );
+        }));
   }
 }
