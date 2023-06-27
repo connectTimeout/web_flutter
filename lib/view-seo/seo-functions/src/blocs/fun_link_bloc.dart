@@ -1,8 +1,8 @@
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
-import 'package:web_flutter/view-seo/site-management/src/components/site_settings_view.dart';
+import 'package:web_flutter/view-seo/statistics/statistics.dart';
 
-class FriendlyLinksBloc with BodyMixin {
+class FunLinkBloc with BodyMixin {
   PagesScope pageScope = PagesScope();
   HttpOptions groupValueOption = HttpOptions.option1;
   void onChanged(HttpOptions? value) {

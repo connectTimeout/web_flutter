@@ -39,13 +39,13 @@ class InclusionPage extends StatelessWidget {
             child: ColoredBox(
               color: Colors.white,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(10).copyWith(top: 0),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     ITextListCell(
                       title: "克隆网站",
                       padding: EdgeInsets.zero,
-                      width: 80,
+                      alignment: Alignment.centerLeft,
                       children: bloc.linkList
                           .map(
                             (e) => Padding(

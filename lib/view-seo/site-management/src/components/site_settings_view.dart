@@ -120,31 +120,82 @@ class SiteDomainView extends StatelessWidget {
   }
 }
 
+class ITextRadioModel {
+  final HttpOptions value;
+  final String title;
+  ITextRadioModel(this.value, this.title);
+}
+
+List<ITextRadioModel> rodioList = [
+  ITextRadioModel(
+    HttpOptions.option1,
+    "单http",
+  ),
+  ITextRadioModel(
+    HttpOptions.option2,
+    "单https",
+  ),
+  ITextRadioModel(
+    HttpOptions.option3,
+    "混合模式",
+  ),
+];
+
 ///网站证书
-class SiteCertificateView extends StatelessWidget {
+
+class SiteCertificateView extends StatefulWidget {
   const SiteCertificateView({super.key});
 
   @override
+  State<SiteCertificateView> createState() => _SiteCertificateViewState();
+}
+
+class _SiteCertificateViewState extends State<SiteCertificateView> {
+  HttpOptions? groupValueOption = HttpOptions.option1;
+  @override
   Widget build(BuildContext context) {
-    return const ITextListCell(
+    return ITextListCell(
       title: "网站证书",
       children: [
-        ITextRadio(
-          value: HttpOptions.option1,
-          title: "单http",
-        ),
-        ITextRadio(
-          value: HttpOptions.option2,
-          title: "单https",
-        ),
-        ITextRadio(
-          value: HttpOptions.option3,
-          title: "混合模式",
+        ...rodioList.map(
+          (e) {
+            return ITextRadio(
+              value: e.value,
+              title: e.title,
+              groupValue: groupValueOption,
+              onChanged: (value) {
+                setState(() {
+                  groupValueOption = value;
+                });
+              },
+            );
+          },
         ),
       ],
     );
   }
 }
+
+// class SiteCertificateView extends StatelessWidget {
+//   const SiteCertificateView({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ITextListCell(
+//       title: "网站证书",
+//       children: [
+//         ...rodioList.map(
+//           (e) {
+//             return ITextRadio(
+//               value: e.value,
+//               title: e.title,
+//             );
+//           },
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 ///网站配置
 class SiteConfigurationView extends StatelessWidget {
@@ -525,41 +576,77 @@ class ExpensiveButtonCell extends StatelessWidget {
   }
 }
 
-///
 class ITextRadio extends StatelessWidget {
   const ITextRadio({
     super.key,
     this.title,
     required this.value,
+    this.onChanged,
+    this.groupValue,
   });
 
   final String? title;
   final dynamic value;
+  final ValueChanged<HttpOptions?>? onChanged;
+  final HttpOptions? groupValue;
 
   @override
   Widget build(BuildContext context) {
-    var bloc = Provider.of<SiteSettingsBloc>(context);
-    return ChangeNotifierProvider<PagesScope>.value(
-      value: bloc.pageScope,
-      child: Consumer<PagesScope>(builder: (_, scope, __) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 15),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Radio(
-                value: value,
-                groupValue: bloc.groupValueOption,
-                onChanged: (value) => bloc.onChanged(value),
-              ),
-              Text(title ?? ''),
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 15),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio<HttpOptions>(
+            value: value,
+            groupValue: groupValue,
+            onChanged: onChanged,
           ),
-        );
-      }),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Text(title ?? ''),
+          ),
+        ],
+      ),
     );
   }
 }
+
+///
+// class ITextRadio extends StatelessWidget {
+//   const ITextRadio({
+//     super.key,
+//     this.title,
+//     required this.value,
+//   });
+
+//   final String? title;
+//   final dynamic value;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     var bloc = Provider.of<SiteSettingsBloc>(context);
+//     return ChangeNotifierProvider<PagesScope>.value(
+//       value: bloc.pageScope,
+//       child: Consumer<PagesScope>(builder: (_, scope, __) {
+//         return Padding(
+//           padding: const EdgeInsets.only(right: 15),
+//           child: Row(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Radio(
+//                 value: value,
+//                 groupValue: bloc.groupValueOption,
+//                 onChanged: (value) => bloc.onChanged(value),
+//               ),
+//               Text(title ?? ''),
+//             ],
+//           ),
+//         );
+//       }),
+//     );
+//   }
+// }
 
 class ITextFieldCell extends StatefulWidget {
   const ITextFieldCell({super.key, this.title, this.innerTitle});

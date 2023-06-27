@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/common/constant.dart';
 import 'package:web_flutter/consts/consts.dart';
+import 'package:web_flutter/view-login/login.dart';
 import 'package:web_flutter/view-pages/src/home/src/home_page.dart';
 import 'package:web_flutter/view-login/src/pages/error_page.dart';
 import 'package:web_flutter/view-login/src/pages/login_page.dart';
@@ -13,14 +14,8 @@ import 'package:web_flutter/view-seo/clone/src/pages/configuration_page.dart';
 import 'package:web_flutter/view-seo/clone/src/pages/parameters_page.dart';
 import 'package:web_flutter/view-seo/clone/src/pages/parameters_visible_page.dart';
 import 'package:web_flutter/view-seo/seo-home/src/blocs/domain_list_bloc.dart';
-import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_domain_bloc.dart';
-import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_home_bloc.dart';
-import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_tabbar_bloc.dart';
-import 'package:web_flutter/view-seo/seo-home/src/models/seo_servers_model.dart';
 import 'package:web_flutter/view-seo/seo-home/src/pages/domain_list_page.dart';
-import 'package:web_flutter/view-seo/seo-home/src/pages/seo_domain_page.dart';
-import 'package:web_flutter/view-seo/seo-home/src/pages/seo_home_page.dart';
-import 'package:web_flutter/view-seo/seo-home/src/pages/seo_tabbar_page.dart';
+import 'package:web_flutter/view-seo/seo.dart';
 import 'package:web_flutter/view-seo/site-inclusion/src/blocs/inclusion_bloc.dart';
 import 'package:web_flutter/view-seo/site-management/site_management.dart';
 import 'package:web_flutter/view-seo/spider/src/blocs/overview_bloc.dart';
@@ -29,7 +24,6 @@ import 'package:web_flutter/view-seo/spider/src/pages/overview_page.dart';
 import 'package:web_flutter/view-seo/spider/src/pages/popular_url_page.dart';
 import 'package:web_flutter/view-seo/spider/src/pages/site_summary_page.dart';
 import 'package:web_flutter/view-seo/spider/src/pages/spider_statistics_page.dart';
-import '../../view-pages/view.dart';
 import '../../view-seo/site-inclusion/src/pages/inclusion_page.dart';
 
 final GlobalKey<NavigatorState> rootNavKey = GlobalKey<NavigatorState>();
@@ -50,6 +44,10 @@ final GlobalKey<NavigatorState> spiderNavKey = GlobalKey<NavigatorState>();
 
 ///克隆配置
 final GlobalKey<NavigatorState> configurationNavKey =
+    GlobalKey<NavigatorState>();
+
+///功能大全
+final GlobalKey<NavigatorState> funAdvertisementNavKey =
     GlobalKey<NavigatorState>();
 
 class AppRouters {
@@ -105,6 +103,17 @@ class AppRouters {
 
   static const String parametersVisiblePath = "/parameters_visible";
   static const String parametersVisibleNamed = "parameters_visible";
+
+  ///功能大全
+  static const String funAdvertisementPath = "/fun_advertisement";
+  static const String funStatisticsPath = "/fun_statistics";
+  static const String funLinkPath = "/fun_link";
+  static const String funRemovePath = "/fun_remove";
+
+  static const String funAdvertisementNamed = "fun_advertisement";
+  static const String funStatisticsNamed = "fun_statistics";
+  static const String funLinkNamed = "fun_link";
+  static const String funRemoveNamed = "fun_remove";
 
   static GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
@@ -228,8 +237,8 @@ class AppRouters {
             pageBuilder: (context, state, child) {
               final args = state.queryParameters["serverId"];
               int id = int.parse(args ?? "0");
-              return CustomTransitionPage<void>(
-                key: state.pageKey,
+              return customTransitionPage(
+                state: state,
                 child: Provider<SEODomainBloc>(
                   create: (_) => SEODomainBloc(),
                   child: SEODomainPage(
@@ -239,17 +248,6 @@ class AppRouters {
                     child: child,
                   ),
                 ),
-                transitionDuration: const Duration(milliseconds: 50),
-                transitionsBuilder: (BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child) {
-                  return FadeTransition(
-                    opacity:
-                        CurveTween(curve: Curves.easeInOut).animate(animation),
-                    child: child,
-                  );
-                },
               );
             },
           ),
@@ -272,8 +270,8 @@ class AppRouters {
             pageBuilder: (context, state, child) {
               final args = state.queryParameters["serverId"];
               int id = int.parse(args ?? "0");
-              return CustomTransitionPage<void>(
-                key: state.pageKey,
+              return customTransitionPage(
+                state: state,
                 child: Provider<SEODomainBloc>(
                   create: (_) => SEODomainBloc(),
                   child: SEODomainPage(
@@ -284,17 +282,6 @@ class AppRouters {
                     child: child,
                   ),
                 ),
-                transitionDuration: const Duration(milliseconds: 50),
-                transitionsBuilder: (BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child) {
-                  return FadeTransition(
-                    opacity:
-                        CurveTween(curve: Curves.easeInOut).animate(animation),
-                    child: child,
-                  );
-                },
               );
             },
           ),
@@ -365,8 +352,8 @@ class AppRouters {
             pageBuilder: (context, state, child) {
               final args = state.queryParameters["serverId"];
               int id = int.parse(args ?? "0");
-              return CustomTransitionPage<void>(
-                key: state.pageKey,
+              return customTransitionPage(
+                state: state,
                 child: Provider<DomainListBloc>(
                   create: (_) => DomainListBloc(),
                   child: DomainListPage(
@@ -376,17 +363,74 @@ class AppRouters {
                     child: child,
                   ),
                 ),
-                transitionDuration: const Duration(milliseconds: 50),
-                transitionsBuilder: (BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child) {
-                  return FadeTransition(
-                    opacity:
-                        CurveTween(curve: Curves.easeInOut).animate(animation),
-                    child: child,
+              );
+            },
+          ),
+          ShellRoute(
+            navigatorKey: funAdvertisementNavKey,
+            routes: [
+              GoRoute(
+                path: funAdvertisementPath,
+                name: funAdvertisementNamed,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: Provider<FunAdvertisementBloc>(
+                      create: (_) => FunAdvertisementBloc(),
+                      child: const FunAdvertisementPage(),
+                    ),
                   );
                 },
+              ),
+              GoRoute(
+                path: funStatisticsPath,
+                name: funStatisticsNamed,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: Provider<FunStatisticsBloc>(
+                      create: (_) => FunStatisticsBloc(),
+                      child: const FunStatisticsPage(),
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                path: funLinkPath,
+                name: funLinkNamed,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: Provider<FunLinkBloc>(
+                      create: (_) => FunLinkBloc(),
+                      child: const FunLinkPage(),
+                    ),
+                  );
+                },
+              ),
+              GoRoute(
+                path: funRemovePath,
+                name: funRemoveNamed,
+                pageBuilder: (context, state) {
+                  return NoTransitionPage(
+                    child: Provider<FunRemoveBloc>(
+                      create: (_) => FunRemoveBloc(),
+                      child: const FunRemovePage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+            pageBuilder: (context, state, child) {
+              final args = state.queryParameters["serverId"];
+              int id = int.parse(args ?? "0");
+              return customTransitionPage(
+                state: state,
+                child: Provider<FunctionsBloc>(
+                  create: (_) => FunctionsBloc(),
+                  child: Functionspage(
+                    id: id,
+                    state: state,
+                    child: child,
+                  ),
+                ),
               );
             },
           ),
@@ -421,8 +465,8 @@ class AppRouters {
             pageBuilder: (context, state, child) {
               final args = state.queryParameters["serverId"];
               int id = int.parse(args ?? "0");
-              return CustomTransitionPage<void>(
-                key: state.pageKey,
+              return customTransitionPage(
+                state: state,
                 child: Provider<ConfigurationBloc>(
                   create: (_) => ConfigurationBloc(),
                   child: ConfigurationPage(
@@ -431,17 +475,6 @@ class AppRouters {
                     child: child,
                   ),
                 ),
-                transitionDuration: const Duration(milliseconds: 50),
-                transitionsBuilder: (BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child) {
-                  return FadeTransition(
-                    opacity:
-                        CurveTween(curve: Curves.easeInOut).animate(animation),
-                    child: child,
-                  );
-                },
               );
             },
           ),
@@ -505,6 +538,22 @@ RouteBase goRoute({String? name, required String path, required Widget child}) {
             child: child,
           );
         },
+      );
+    },
+  );
+}
+
+CustomTransitionPage customTransitionPage(
+    {required GoRouterState state, required Widget child}) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 150),
+    transitionsBuilder: (BuildContext context, Animation<double> animation,
+        Animation<double> secondaryAnimation, Widget child) {
+      return FadeTransition(
+        opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
+        child: child,
       );
     },
   );

@@ -45,11 +45,13 @@ class IHomeCell extends StatefulWidget {
 
 class _IHomeCellState extends State<IHomeCell> {
   int? selectIndex;
+  int? indexs;
   String? namePath;
   int tabbarIndex = 0;
   @override
   void initState() {
     selectIndex = widget.selectIndex;
+
     super.initState();
   }
 
@@ -151,7 +153,7 @@ class _IHomeCellState extends State<IHomeCell> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 90,
+                              height: 100,
                               child: Padding(
                                 padding: const EdgeInsets.all(15),
                                 child: Row(
@@ -163,7 +165,8 @@ class _IHomeCellState extends State<IHomeCell> {
                                         itemBuilder: (context, index) {
                                           var model = widget.model[index];
                                           return ITextButton(
-                                            title: model.title ?? "返回主页",
+                                            padding: const EdgeInsets.all(5),
+                                            title: model.title ?? "",
                                             icon:
                                                 model.icon ?? Icons.home_sharp,
                                             isIcon: true,
@@ -179,8 +182,7 @@ class _IHomeCellState extends State<IHomeCell> {
                                                 queryParameters:
                                                     model.queryParameters ??
                                                         {
-                                                          "serverId":
-                                                              "${widget.selectIndex}"
+                                                          "serverId": "$indexs",
                                                         },
                                               );
                                             },
@@ -275,6 +277,7 @@ class _IHomeCellState extends State<IHomeCell> {
                   () {
                     selectIndex = index;
                     onss(index, serverList?[index].id ?? 0);
+                    indexs = index;
                     context.goNamed(
                       namePath ?? AppRouters.siteSettingsNamed,
                       queryParameters: {"serverId": "${serverList?[index].id}"},
