@@ -7,34 +7,16 @@ import 'package:web_flutter/view-pages/page.dart';
 import 'package:web_flutter/view-seo/seo.dart';
 import 'package:web_flutter/view-seo/seo-management/management.dart';
 
-final GlobalKey<NavigatorState> rootNavKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> shellNavKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> pageNavKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> pageaNavKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> serverNavKey = GlobalKey<NavigatorState>();
-
-///网站收录
-final GlobalKey<NavigatorState> inclusionNavKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> inclusionViewNavKey =
-    GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> inclusionTabNavKey =
-    GlobalKey<NavigatorState>();
-
-///蜘蛛统计
-final GlobalKey<NavigatorState> spiderNavKey = GlobalKey<NavigatorState>();
-
-///克隆配置
-final GlobalKey<NavigatorState> configurationNavKey =
-    GlobalKey<NavigatorState>();
-
-///功能大全
-final GlobalKey<NavigatorState> funAdvertisementNavKey =
-    GlobalKey<NavigatorState>();
+import 'router_key.dart';
 
 class AppRouters {
   /// 用于路径路由(声明式路由)的常量, 路径不包含参数
   static const String homePath = '/'; // 根路由
   static const String login = '/login';
+
+  /// 用于 命名路由的常量
+  static const String homeNamed = 'home_page';
+  static const String loginNamed = 'login_page';
 
   ///网站管理
   ///path
@@ -44,10 +26,6 @@ class AppRouters {
   static const String statisticsPath = "/statistics";
   static const String advertisingPath = "/advertising";
   static const String templatePath = "/template";
-
-  /// 用于 命名路由的常量
-  static const String homeNamed = 'home_page';
-  static const String loginNamed = 'login_page';
 
   ///named
   static const String siteSettingsNamed = "site_settings";
@@ -62,12 +40,15 @@ class AppRouters {
   static const String siteInclusionNamed = "site_inclusion";
 
   ///蜘蛛统计
+  ///path
   static const String overviewPath = "/overview";
   static const String siteSummaryPath = "/site_summary";
   static const String spiderStatisticsPath = "/spider_statistics";
   static const String popularURLPath = "/popular_URL";
   static const String highRequencyPath = "/high_requency";
   static const String configurationPath = "/configuration";
+
+  ///named
   static const String overviewNamed = "overview";
   static const String siteSummaryNamed = "site_summary";
   static const String spiderStatisticsNamed = "spider_statistics";
@@ -96,6 +77,11 @@ class AppRouters {
   static const String funLinkNamed = "fun_link";
   static const String funRemoveNamed = "fun_remove";
 
+  ///用户中心
+  static const String userMessageCenterPath = "/message_center";
+
+  static const String userMessageCenterNamed = "message_center";
+
   static GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
     initialLocation: homePath,
@@ -108,7 +94,7 @@ class AppRouters {
         child: const HomePages(),
       ),
       ShellRoute(
-        navigatorKey: shellNavKey,
+        navigatorKey: seoNavKey,
         routes: [
           ShellRoute(
             navigatorKey: pageNavKey,
@@ -466,6 +452,39 @@ class AppRouters {
           return Provider<SEOHomeBloc>(
             create: (_) => SEOHomeBloc(),
             child: SeoHomePage(
+              state: state,
+              id: id,
+              child: child,
+            ),
+          );
+        },
+      ),
+      ShellRoute(
+        navigatorKey: userNavKey,
+        routes: [
+          GoRoute(
+            path: userMessageCenterPath,
+            name: userMessageCenterNamed,
+            pageBuilder: (context, state) {
+              final args = state.queryParameters["serverId"];
+              int id = int.parse(args ?? "0");
+              return NoTransitionPage(
+                child: Provider<MessageCenterBloc>(
+                  create: (_) => MessageCenterBloc(),
+                  child: MessageCenterPage(
+                    id: id,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+        builder: (context, state, child) {
+          final args = state.queryParameters["serverId"];
+          int id = int.parse(args ?? "0");
+          return Provider<UserHomeBloc>(
+            create: (_) => UserHomeBloc(),
+            child: UserHomePage(
               state: state,
               id: id,
               child: child,

@@ -3,9 +3,7 @@ import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/routers/routers.dart';
 import 'package:web_flutter/view-seo/seo.dart';
 
-class MessageCenterBloc with BodyMixin {
-  TextEditingController textController = TextEditingController();
-
+class UserHomeBloc with BodyMixin {
   int? selectIndex;
   Map<String, dynamic>? queryParameters;
 

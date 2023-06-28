@@ -7,3 +7,4 @@ export 'src/utils.dart';
 export 'src/list_ext.dart';
 export 'src/utilities.dart';
 export 'src/uxbase.dart';
+export 'src/adapt.dart';

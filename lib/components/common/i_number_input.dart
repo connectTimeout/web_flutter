@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:web_flutter/components/common/common/formatters/number_input_formatter.dart';
+import 'package:web_flutter/components/common/formatters/number_input_formatter.dart';
 
 ///
 /// @author xbwca

@@ -39,7 +39,7 @@ class _HomePagesState extends State<HomePages> {
               AnimatedButton(
                 value: "管理员",
                 onTap: () {
-                  context.go(AppRouters.siteSettingsPath);
+                  context.go(AppRouters.userMessageCenterPath);
                 },
               ),
             ],

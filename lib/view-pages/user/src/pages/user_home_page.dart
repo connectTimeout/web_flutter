@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
-import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_home_bloc.dart';
+import 'package:web_flutter/routers/routers.dart';
+import 'package:web_flutter/view-pages/user/user.dart';
 
-class SeoHomePage extends StatelessWidget {
-  const SeoHomePage(
+class UserHomePage extends StatelessWidget {
+  const UserHomePage(
       {super.key, required this.state, required this.child, required this.id});
 
   final GoRouterState state;
@@ -14,9 +15,8 @@ class SeoHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = Provider.of<SEOHomeBloc>(context);
+    var bloc = Provider.of<UserHomeBloc>(context);
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Body(
         onInit: bloc.onInit,
         controller: bloc.controller,
@@ -25,6 +25,7 @@ class SeoHomePage extends StatelessWidget {
             const Positioned.fill(child: ColoredBox(color: Colors.black)),
             Builder(builder: (context) {
               return IHomeCell(
+                apiName: AppRouters.userMessageCenterNamed,
                 serverList: bloc.serverList,
                 userName: "dfdf",
                 selectIndex: bloc.selectIndex,
