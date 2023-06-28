@@ -25,7 +25,7 @@ class _ParentChildCheckboxState extends State<ParentChildCheckbox> {
   @override
   void initState() {
     super.initState();
-    _childrenValue = List.filled(widget.children!.length, false);
+    _childrenValue = List.filled(widget.children?.length ?? 0, false);
   }
 
   @override
@@ -57,7 +57,7 @@ class _ParentChildCheckboxState extends State<ParentChildCheckbox> {
         ),
         ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 5),
-          itemCount: widget.children!.length,
+          itemCount: widget.children?.length ?? 0,
           itemBuilder: (context, index) => CustomLabeledCheckbox(
             label: widget.children![index].name,
             value: _childrenValue[index],
@@ -119,14 +119,14 @@ class _ParentChildCheckboxState extends State<ParentChildCheckbox> {
 class CustomLabeledCheckbox extends StatelessWidget {
   const CustomLabeledCheckbox({
     super.key,
-    required this.label,
+    this.label,
     required this.value,
     required this.onChanged,
     this.tristate = false,
     this.children,
   });
 
-  final String label;
+  final String? label;
   final bool? value;
   final ValueChanged<bool?>? onChanged;
   final bool tristate;
@@ -136,24 +136,30 @@ class CustomLabeledCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 30),
-            child: Checkbox(
-              value: value,
-              tristate: tristate,
-              onChanged: onChanged,
-              activeColor: Colors.green,
-            ),
+      child: SizedBox(
+        width: 600,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 30),
+                child: Checkbox(
+                  value: value,
+                  tristate: tristate,
+                  onChanged: onChanged,
+                  activeColor: Colors.green,
+                ),
+              ),
+              ...children ??
+                  [
+                    Text(
+                      label ?? "-",
+                    )
+                  ],
+            ],
           ),
-          ...children ??
-              [
-                Text(
-                  label,
-                )
-              ],
-        ],
+        ),
       ),
     );
   }

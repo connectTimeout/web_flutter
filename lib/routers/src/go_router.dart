@@ -91,7 +91,10 @@ class AppRouters {
         // 不传递参数的路由项
         name: homeNamed, // 命名路由
         path: homePath, // 路径路由
-        child: const HomePages(),
+        child: Provider<HomeBloc>(
+          create: (_) => HomeBloc(),
+          child: const HomePage(),
+        ),
       ),
       ShellRoute(
         navigatorKey: seoNavKey,

@@ -107,8 +107,10 @@ class _IFunctionButtonState extends State<IFunctionButton> {
                 });
               },
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 11,
+                  vertical: 5,
+                ),
                 child: Column(
                   children: [
                     Icon(
@@ -215,7 +217,7 @@ class _IExpensiveButtonsState extends State<IExpensiveButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    return ElevatedButton(
       onHover: (e) {
         setState(() {
           onHover = !onHover;
@@ -238,19 +240,29 @@ class _IExpensiveButtonsState extends State<IExpensiveButtons> {
         ),
       ),
       onPressed: widget.onPressed,
-      label: Padding(
-        padding: const EdgeInsets.only(bottom: 2),
-        child: Text(
-          widget.title ?? '',
-          style: TextStyle(
-              color:
-                  onHover ? widget.selectLabelColor : widget.uncheckLabelColor),
-        ),
-      ),
-      icon: Icon(
-        widget.icon,
-        color: onHover ? widget.selectIconColor : widget.uncheckIconColor,
-        size: widget.iconSize,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          widget.icon != null
+              ? Icon(
+                  widget.icon,
+                  color: onHover
+                      ? widget.selectIconColor
+                      : widget.uncheckIconColor,
+                  size: widget.iconSize,
+                )
+              : const SizedBox(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Text(
+              widget.title ?? '',
+              style: TextStyle(
+                  color: onHover
+                      ? widget.selectLabelColor
+                      : widget.uncheckLabelColor),
+            ),
+          ),
+        ],
       ),
     );
   }

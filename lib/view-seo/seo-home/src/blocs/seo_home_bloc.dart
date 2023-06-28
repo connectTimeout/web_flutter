@@ -79,7 +79,7 @@ class SEOHomeBloc with BodyMixin {
     var sp = await SpUtil.getInstance();
     var selectInde = sp?.getInt("serverIndex");
     selectIndex = selectInde;
-    queryParameters = {"serverId": "$selectIndex"};
+    queryParameters = {"serverId": "${selectInde ?? -1}"};
     return serverList;
   }
 }

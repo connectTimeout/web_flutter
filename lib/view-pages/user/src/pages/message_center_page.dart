@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/view-pages/user/user.dart';
 import 'package:web_flutter/view-seo/seo-management/management.dart';
+import 'package:web_flutter/view-seo/seo.dart';
 
 class MessageCenterPage extends StatelessWidget {
   const MessageCenterPage({super.key, required this.id});
@@ -13,9 +14,10 @@ class MessageCenterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bloc = Provider.of<MessageCenterBloc>(context);
-    return SingleChildScrollView(
+    return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -87,9 +89,74 @@ class MessageCenterPage extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 20,
+              itemBuilder: (context, index) {
+                return allMessageCell(bloc);
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
+Widget allMessageCell(MessageCenterBloc bloc) {
+  return CustomLabeledCheckbox(
+    value: bloc.parentValue,
+    onChanged: (bool? value) {},
+    children: [
+      Transform.scale(
+        scale: 0.7,
+        child: VariousStatelessButton(
+          color: const Color.fromARGB(255, 250, 210, 210),
+          textColor: const Color.fromARGB(255, 255, 101, 101),
+          onPressed: () {},
+          title: "警告",
+        ),
+      ),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Text("系统预警"),
+      ),
+      const Text("警告：..."),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Text("1515154"),
+      ),
+      const Text("2023-05-31"),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Text("154.252.525.525"),
+      ),
+      Transform.scale(
+        scale: 0.7,
+        child: IExpensiveButtons(
+          onPressed: () {},
+          title: '删除',
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Transform.scale(
+          scale: 0.7,
+          child: IExpensiveButtons(
+            onPressed: () {},
+            title: '查看',
+          ),
+        ),
+      ),
+    ],
+  );
+}
+// class AllMessageCell extends StatelessWidget {
+//   const AllMessageCell({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }

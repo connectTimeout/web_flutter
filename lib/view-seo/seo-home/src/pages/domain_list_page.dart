@@ -83,7 +83,7 @@ class DomainListPage extends StatelessWidget {
                     ),
                     Flexible(
                       child: ListView.builder(
-                        itemCount: domainList?.length,
+                        itemCount: domainList?.length ?? 0,
                         itemBuilder: (context, ind) {
                           int index = ind;
                           return ITabListCell(

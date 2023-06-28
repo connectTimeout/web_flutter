@@ -75,8 +75,10 @@ class SEODomainPage extends StatelessWidget {
                               ),
                             ),
                             ...bloc.listButton.map((e) {
-                              return textButton(e.value,
-                                  onPressed: e.onPressed);
+                              return textButton(
+                                e.value,
+                                onPressed: e.onPressed,
+                              );
                             }),
                             bloc.onRefreshDomain(context),
                           ],
@@ -85,7 +87,7 @@ class SEODomainPage extends StatelessWidget {
                     ),
                     Flexible(
                       child: ListView.builder(
-                        itemCount: domainList?.length,
+                        itemCount: domainList?.length ?? 0,
                         itemBuilder: (context, ind) {
                           int index = ind;
                           return ITabListCell(

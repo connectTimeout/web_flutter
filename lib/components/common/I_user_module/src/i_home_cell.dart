@@ -50,11 +50,10 @@ class _IHomeCellState extends State<IHomeCell> {
   int tabbarIndex = 0;
   @override
   void initState() {
-    namePath = widget.apiName;
     if (widget.selectIndex != null) {
       selectIndex = widget.selectIndex;
     } else {
-      selectIndex = 0;
+      selectIndex = null;
     }
     super.initState();
   }
@@ -146,7 +145,7 @@ class _IHomeCellState extends State<IHomeCell> {
                         width: 70,
                         child: _generateExpansionTileWidget(
                           widget.serverList,
-                          widget.apiName,
+                          namePath,
                         ),
                       ),
                     ),
@@ -179,8 +178,8 @@ class _IHomeCellState extends State<IHomeCell> {
                                           onPressed: () {
                                             setState(() {
                                               tabbarIndex = index;
+                                              namePath = model.namePath;
                                             });
-                                            namePath = model.namePath;
                                             context.goNamed(
                                               model.namePath ??
                                                   AppRouters.siteSettingsPath,
@@ -282,12 +281,13 @@ class _IHomeCellState extends State<IHomeCell> {
                     selectIndex = index;
                     onss(index, serverList?[index].id ?? 0);
                     indexs = index;
-                    context.goNamed(
-                      apiName ?? AppRouters.siteSettingsNamed,
-                      queryParameters: {"serverId": "${serverList?[index].id}"},
-                    );
                   },
                 );
+                context.goNamed(
+                  apiName ?? AppRouters.siteSettingsNamed,
+                  queryParameters: {"serverId": "${serverList?[index].id}"},
+                );
+                print({"serverId": "${serverList?[index].id}"});
               },
             ),
           );

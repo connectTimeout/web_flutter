@@ -4,6 +4,8 @@ import 'package:web_flutter/routers/routers.dart';
 import 'package:web_flutter/view-seo/seo.dart';
 
 class MessageCenterBloc with BodyMixin {
+  bool? parentValue = false;
+
   TextEditingController textController = TextEditingController();
 
   int? selectIndex;
