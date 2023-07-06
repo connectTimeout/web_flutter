@@ -6,6 +6,14 @@ import 'package:web_flutter/consts/consts.dart';
 import 'package:web_flutter/view-pages/page.dart';
 import 'package:web_flutter/view-seo/seo.dart';
 import 'package:web_flutter/view-seo/seo-management/management.dart';
+import 'package:web_flutter/view-seo/view/blocs/add_account_bloc.dart';
+import 'package:web_flutter/view-seo/view/blocs/add_server_bloc.dart';
+import 'package:web_flutter/view-seo/view/blocs/complaint_bloc.dart';
+import 'package:web_flutter/view-seo/view/blocs/reason_deleton_bloc.dart';
+import 'package:web_flutter/view-seo/view/pages/add_account_page.dart';
+import 'package:web_flutter/view-seo/view/pages/add_server_page.dart';
+import 'package:web_flutter/view-seo/view/pages/complaint_page.dart';
+import 'package:web_flutter/view-seo/view/pages/reason_deleton_page.dart';
 
 import 'router_key.dart';
 
@@ -13,10 +21,18 @@ class AppRouters {
   /// 用于路径路由(声明式路由)的常量, 路径不包含参数
   static const String homePath = '/'; // 根路由
   static const String login = '/login';
+  static const String complaintPath = '/complaint';
+  static const String addServerPath = '/add_server';
+  static const String reasonDeletonPath = '/reason_deleton';
+  static const String addAccountPath = '/add_account';
 
   /// 用于 命名路由的常量
   static const String homeNamed = 'home_page';
   static const String loginNamed = 'login_page';
+  static const String complaintNamed = 'complaint';
+  static const String addServerNamed = 'add_server';
+  static const String reasonDeletonNamed = 'reason_deleton';
+  static const String addAccountNamed = 'add_account';
 
   ///网站管理
   ///path
@@ -35,415 +51,178 @@ class AppRouters {
   static const String advertisingNamed = "advertising";
   static const String templateNamed = "template";
 
-  ///网站收录
-  static const String siteInclusionPath = "/site_inclusion";
-  static const String siteInclusionNamed = "site_inclusion";
-
-  ///蜘蛛统计
-  ///path
-  static const String overviewPath = "/overview";
-  static const String siteSummaryPath = "/site_summary";
-  static const String spiderStatisticsPath = "/spider_statistics";
-  static const String popularURLPath = "/popular_URL";
-  static const String highRequencyPath = "/high_requency";
-  static const String configurationPath = "/configuration";
-
-  ///named
-  static const String overviewNamed = "overview";
-  static const String siteSummaryNamed = "site_summary";
-  static const String spiderStatisticsNamed = "spider_statistics";
-  static const String popularURLNamed = "popular_URL";
-  static const String highRequencyNamed = "high_requency";
-  static const String configurationNamed = "configuration";
-
-  ///克隆配置
-  static const String parametersPath = "/parameters";
-  static const String parametersNamed = "parameters";
-
-  static const String siteSettings1Path = "/site_settin";
-  static const String siteSettings1Named = "site_settin";
-
-  static const String parametersVisiblePath = "/parameters_visible";
-  static const String parametersVisibleNamed = "parameters_visible";
-
-  ///功能大全
-  static const String funAdvertisementPath = "/fun_advertisement";
-  static const String funStatisticsPath = "/fun_statistics";
-  static const String funLinkPath = "/fun_link";
-  static const String funRemovePath = "/fun_remove";
-
-  static const String funAdvertisementNamed = "fun_advertisement";
-  static const String funStatisticsNamed = "fun_statistics";
-  static const String funLinkNamed = "fun_link";
-  static const String funRemoveNamed = "fun_remove";
-
-  ///用户中心
-  static const String userMessageCenterPath = "/message_center";
-
-  static const String userMessageCenterNamed = "message_center";
-
   static GoRouter router = GoRouter(
     navigatorKey: rootNavKey,
     initialLocation: homePath,
     // 默认路由, 不指定这一荐时，默认路由为 '/'
     routes: [
-      goRoute(
-        // 不传递参数的路由项
-        name: homeNamed, // 命名路由
-        path: homePath, // 路径路由
-        child: Provider<HomeBloc>(
-          create: (_) => HomeBloc(),
-          child: const HomePage(),
-        ),
-      ),
+      GoRoute(
+          // 不传递参数的路由项
+          name: homeNamed, // 命名路由
+          path: homePath, // 路径路由
+          // builder: (context, state) {
+          //   return Provider<HomeBloc>(
+          //     create: (_) => HomeBloc(),
+          //     child: const HomePage(),
+          //   );
+          // },
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return customTransitionPage(
+                child: Provider<HomeBloc>(
+                  create: (_) => HomeBloc(),
+                  child: const HomePage(),
+                ),
+                state: state);
+          }),
       ShellRoute(
         navigatorKey: seoNavKey,
         routes: [
-          ShellRoute(
-            navigatorKey: pageNavKey,
-            routes: [
-              ShellRoute(
-                navigatorKey: serverNavKey,
-                routes: [
-                  GoRoute(
-                    path: siteSettingsPath,
-                    name: siteSettingsNamed,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: Provider<SiteSettingsBloc>(
-                          create: (_) => SiteSettingsBloc(),
-                          child: const SiteSettingsPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: friendlyLinksPath,
-                    name: friendlyLinksNamed,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: Provider<FriendlyLinksBloc>(
-                          create: (_) => FriendlyLinksBloc(),
-                          child: const FriendlyLinksPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: nginxConfigPath,
-                    name: nginxConfigNamed,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: Provider<NginxConfigBloc>(
-                          create: (_) => NginxConfigBloc(),
-                          child: const NginxConfigPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: statisticsPath,
-                    name: statisticsNamed,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: Provider<StatisticsCodeBloc>(
-                          create: (_) => StatisticsCodeBloc(),
-                          child: const StatisticsCodePage(),
-                        ),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: advertisingPath,
-                    name: advertisingNamed,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: Provider<AdvertisementSettingBloc>(
-                          create: (_) => AdvertisementSettingBloc(),
-                          child: const AdvertisementSettingPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: templatePath,
-                    name: templateNamed,
-                    pageBuilder: (context, state) {
-                      return NoTransitionPage(
-                        child: Provider<TemplateCodeBloc>(
-                          create: (_) => TemplateCodeBloc(),
-                          child: const TemplateCodePage(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-                builder: (context, state, child) {
-                  final index = state.queryParameters["serverId"];
-                  DomainNameModel args;
-                  if (state.extra == null) {
-                    var model = DomainNameModel(
-                      "",
-                      NavigationDrawerType.http,
-                      "",
-                    );
-                    args = model;
-                  } else {
-                    args = state.extra as DomainNameModel;
-                  }
-                  int id = int.parse(index ?? "0");
-                  return Provider<SEOTabBarBloc>(
-                    create: (_) => SEOTabBarBloc(),
-                    child: SEOTabBarPage(
-                      state: state,
-                      id: id,
-                      model: args,
-                      child: child,
-                    ),
-                  );
-                },
-              ),
-            ],
-            pageBuilder: (context, state, child) {
-              final args = state.queryParameters["serverId"];
-              int id = int.parse(args ?? "0");
-              return customTransitionPage(
-                state: state,
-                child: Provider<SEODomainBloc>(
-                  create: (_) => SEODomainBloc(),
-                  child: SEODomainPage(
-                    isView: true,
-                    state: state,
-                    id: id,
-                    child: child,
-                  ),
+          GoRoute(
+            path: complaintPath,
+            name: complaintNamed,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                child: Provider<ComplaintBloc>(
+                  create: (_) => ComplaintBloc(),
+                  child: const ComplaintPage(),
                 ),
               );
             },
           ),
-          ShellRoute(
-            navigatorKey: inclusionNavKey,
-            routes: [
-              GoRoute(
-                path: siteInclusionPath,
-                name: siteInclusionNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<InclusionBloc>(
-                      create: (_) => InclusionBloc(),
-                      child: const InclusionPage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-            pageBuilder: (context, state, child) {
-              final args = state.queryParameters["serverId"];
-              int id = int.parse(args ?? "0");
-              return customTransitionPage(
-                state: state,
-                child: Provider<SEODomainBloc>(
-                  create: (_) => SEODomainBloc(),
-                  child: SEODomainPage(
-                    routerNamed: siteInclusionNamed,
-                    isView: false,
-                    state: state,
-                    id: id,
-                    child: child,
-                  ),
+          GoRoute(
+            path: addAccountPath,
+            name: addAccountNamed,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                child: Provider<AddAccountBloc>(
+                  create: (_) => AddAccountBloc(),
+                  child: const AddAccountPage(),
                 ),
               );
             },
           ),
-          ShellRoute(
-            navigatorKey: spiderNavKey,
-            routes: [
-              GoRoute(
-                path: overviewPath,
-                name: overviewNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<OverviewBloc>(
-                      create: (_) => OverviewBloc(),
-                      child: const OverviewPage(),
-                    ),
-                  );
-                },
-              ),
-              GoRoute(
-                path: siteSummaryPath,
-                name: siteSummaryNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<OverviewBloc>(
-                      create: (_) => OverviewBloc(),
-                      child: const SiteSummaryPage(),
-                    ),
-                  );
-                },
-              ),
-              GoRoute(
-                path: spiderStatisticsPath,
-                name: spiderStatisticsNamed,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: SpiderStatisticsPage(),
-                  );
-                },
-              ),
-              GoRoute(
-                path: popularURLPath,
-                name: popularURLNamed,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: PopularURLPage(),
-                  );
-                },
-              ),
-              GoRoute(
-                path: highRequencyPath,
-                name: highRequencyNamed,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: HighRequencyPage(),
-                  );
-                },
-              ),
-              GoRoute(
-                path: configurationPath,
-                name: configurationNamed,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: HighRequencyPage(),
-                  );
-                },
-              ),
-            ],
-            pageBuilder: (context, state, child) {
-              final args = state.queryParameters["serverId"];
-              int id = int.parse(args ?? "0");
-              return customTransitionPage(
-                state: state,
-                child: Provider<DomainListBloc>(
-                  create: (_) => DomainListBloc(),
-                  child: DomainListPage(
-                    routerNamed: overviewNamed,
-                    state: state,
-                    id: id,
-                    child: child,
-                  ),
+          // ShellRoute(
+          //   navigatorKey: serverNavKey,
+          //   routes: [
+          //     GoRoute(
+          //       path: siteSettingsPath,
+          //       name: siteSettingsNamed,
+          //       pageBuilder: (context, state) {
+          //         return NoTransitionPage(
+          //           child: Provider<SiteSettingsBloc>(
+          //             create: (_) => SiteSettingsBloc(),
+          //             child: const SiteSettingsPage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //     GoRoute(
+          //       path: friendlyLinksPath,
+          //       name: friendlyLinksNamed,
+          //       pageBuilder: (context, state) {
+          //         return NoTransitionPage(
+          //           child: Provider<FriendlyLinksBloc>(
+          //             create: (_) => FriendlyLinksBloc(),
+          //             child: const FriendlyLinksPage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //     GoRoute(
+          //       path: nginxConfigPath,
+          //       name: nginxConfigNamed,
+          //       pageBuilder: (context, state) {
+          //         return NoTransitionPage(
+          //           child: Provider<NginxConfigBloc>(
+          //             create: (_) => NginxConfigBloc(),
+          //             child: const NginxConfigPage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //     GoRoute(
+          //       path: statisticsPath,
+          //       name: statisticsNamed,
+          //       pageBuilder: (context, state) {
+          //         return NoTransitionPage(
+          //           child: Provider<StatisticsCodeBloc>(
+          //             create: (_) => StatisticsCodeBloc(),
+          //             child: const StatisticsCodePage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //     GoRoute(
+          //       path: advertisingPath,
+          //       name: advertisingNamed,
+          //       pageBuilder: (context, state) {
+          //         return NoTransitionPage(
+          //           child: Provider<AdvertisementSettingBloc>(
+          //             create: (_) => AdvertisementSettingBloc(),
+          //             child: const AdvertisementSettingPage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //     GoRoute(
+          //       path: templatePath,
+          //       name: templateNamed,
+          //       pageBuilder: (context, state) {
+          //         return NoTransitionPage(
+          //           child: Provider<TemplateCodeBloc>(
+          //             create: (_) => TemplateCodeBloc(),
+          //             child: const TemplateCodePage(),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ],
+          //   builder: (context, state, child) {
+          //     final index = state.queryParameters["serverId"];
+          //     DomainNameModel args;
+          //     if (state.extra == null) {
+          //       var model = DomainNameModel(
+          //         "",
+          //         NavigationDrawerType.http,
+          //         "",
+          //       );
+          //       args = model;
+          //     } else {
+          //       args = state.extra as DomainNameModel;
+          //     }
+          //     int id = int.parse(index ?? "0");
+          //     return Provider<SEOTabBarBloc>(
+          //       create: (_) => SEOTabBarBloc(),
+          //       child: SEOTabBarPage(
+          //         state: state,
+          //         id: id,
+          //         model: args,
+          //         child: child,
+          //       ),
+          //     );
+          //   },
+          // ),
+
+          GoRoute(
+            path: addServerPath,
+            name: addServerNamed,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                child: Provider<AddServerBloc>(
+                  create: (_) => AddServerBloc(),
+                  child: const AddServerPage(),
                 ),
               );
             },
           ),
-          ShellRoute(
-            navigatorKey: funAdvertisementNavKey,
-            routes: [
-              GoRoute(
-                path: funAdvertisementPath,
-                name: funAdvertisementNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<FunAdvertisementBloc>(
-                      create: (_) => FunAdvertisementBloc(),
-                      child: const FunAdvertisementPage(),
-                    ),
-                  );
-                },
-              ),
-              GoRoute(
-                path: funStatisticsPath,
-                name: funStatisticsNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<FunStatisticsBloc>(
-                      create: (_) => FunStatisticsBloc(),
-                      child: const FunStatisticsPage(),
-                    ),
-                  );
-                },
-              ),
-              GoRoute(
-                path: funLinkPath,
-                name: funLinkNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<FunLinkBloc>(
-                      create: (_) => FunLinkBloc(),
-                      child: const FunLinkPage(),
-                    ),
-                  );
-                },
-              ),
-              GoRoute(
-                path: funRemovePath,
-                name: funRemoveNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<FunRemoveBloc>(
-                      create: (_) => FunRemoveBloc(),
-                      child: const FunRemovePage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-            pageBuilder: (context, state, child) {
-              final args = state.queryParameters["serverId"];
-              int id = int.parse(args ?? "0");
-              return customTransitionPage(
-                state: state,
-                child: Provider<FunctionsBloc>(
-                  create: (_) => FunctionsBloc(),
-                  child: Functionspage(
-                    id: id,
-                    state: state,
-                    child: child,
-                  ),
-                ),
-              );
-            },
-          ),
-          ShellRoute(
-            navigatorKey: configurationNavKey,
-            routes: [
-              GoRoute(
-                path: parametersPath,
-                name: parametersNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<ParametersBloc>(
-                      create: (_) => ParametersBloc(),
-                      child: const ParametersPage(),
-                    ),
-                  );
-                },
-              ),
-              GoRoute(
-                path: parametersVisiblePath,
-                name: parametersVisibleNamed,
-                pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: Provider<ParametersVisibleBloc>(
-                      create: (_) => ParametersVisibleBloc(),
-                      child: const ParametersVisiblePage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-            pageBuilder: (context, state, child) {
-              final args = state.queryParameters["serverId"];
-              int id = int.parse(args ?? "0");
-              return customTransitionPage(
-                state: state,
-                child: Provider<ConfigurationBloc>(
-                  create: (_) => ConfigurationBloc(),
-                  child: ConfigurationPage(
-                    id: id,
-                    state: state,
-                    child: child,
-                  ),
+          GoRoute(
+            path: reasonDeletonPath,
+            name: reasonDeletonNamed,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                child: Provider<ReasonDeletonBloc>(
+                  create: (_) => ReasonDeletonBloc(),
+                  child: const ReasonDeletonPage(),
                 ),
               );
             },
@@ -455,39 +234,6 @@ class AppRouters {
           return Provider<SEOHomeBloc>(
             create: (_) => SEOHomeBloc(),
             child: SeoHomePage(
-              state: state,
-              id: id,
-              child: child,
-            ),
-          );
-        },
-      ),
-      ShellRoute(
-        navigatorKey: userNavKey,
-        routes: [
-          GoRoute(
-            path: userMessageCenterPath,
-            name: userMessageCenterNamed,
-            pageBuilder: (context, state) {
-              final args = state.queryParameters["serverId"];
-              int id = int.parse(args ?? "0");
-              return NoTransitionPage(
-                child: Provider<MessageCenterBloc>(
-                  create: (_) => MessageCenterBloc(),
-                  child: MessageCenterPage(
-                    id: id,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-        builder: (context, state, child) {
-          final args = state.queryParameters["serverId"];
-          int id = int.parse(args ?? "0");
-          return Provider<UserHomeBloc>(
-            create: (_) => UserHomeBloc(),
-            child: UserHomePage(
               state: state,
               id: id,
               child: child,
@@ -521,27 +267,6 @@ class AppRouters {
         // return state.namedLocation(loginNamed);
       }
       return null;
-    },
-  );
-}
-
-RouteBase goRoute({String? name, required String path, required Widget child}) {
-  return GoRoute(
-    name: name,
-    path: path,
-    pageBuilder: (context, state) {
-      return CustomTransitionPage<void>(
-        key: state.pageKey,
-        child: child,
-        transitionDuration: const Duration(milliseconds: 150),
-        transitionsBuilder: (BuildContext context, Animation<double> animation,
-            Animation<double> secondaryAnimation, Widget child) {
-          return FadeTransition(
-            opacity: CurveTween(curve: Curves.easeInOut).animate(animation),
-            child: child,
-          );
-        },
-      );
     },
   );
 }

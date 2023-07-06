@@ -10,7 +10,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:web_flutter/components/components.dart';
-import 'package:web_flutter/model/model.dart';
+import 'package:web_flutter/model/src/response/api_response_entity.dart';
 
 typedef AsyncBodyBuilder<T> = Widget Function(BuildContext context, T data);
 
@@ -145,7 +145,7 @@ class BodyState<T> extends State<Body<T>> with AutomaticKeepAliveClientMixin {
             return widget.notNetword ??
                 EmptyWidget(
                   type: EmptyType.noNetwork,
-                  message: error.msg,
+                  message: error.message,
                   btnTitle: "重新加载",
                   onTap: () => _controller?.reload(),
                 );

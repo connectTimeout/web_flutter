@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:web_flutter/config/config.dart';
 import 'package:web_flutter/model/model.dart';
+import 'package:web_flutter/model/src/response/api_response_entity.dart';
 
 import 'exception.dart';
 
@@ -40,9 +41,9 @@ class RequestClient {
         ..method = method
         ..headers = headers;
       data = _convertRequestData(data);
-
       Response response = await _dio.request(url,
           queryParameters: queryParameters, data: data, options: options);
+
       return _handleResponse<T>(response);
     } catch (e) {
       var exception = ApiException.from(e);
@@ -72,12 +73,14 @@ class RequestClient {
     bool showLoading = true,
     bool Function(ApiException)? onError,
   }) {
-    return request(url,
-        method: "POST",
-        queryParameters: queryParameters,
-        data: data,
-        headers: headers,
-        onError: onError);
+    return request(
+      url,
+      method: "POST",
+      queryParameters: queryParameters,
+      data: data,
+      headers: headers,
+      onError: onError,
+    );
   }
 
   Future<T?> delete<T>(
@@ -114,11 +117,11 @@ class RequestClient {
 
   ///请求响应内容处理
   T? _handleResponse<T>(Response response) {
-    if (response.data["code"] == 0) {
+    if (response.data["status"] == true) {
       if (T.toString() == (RawData).toString()) {
         RawData raw = RawData();
         raw.value = response.data;
-        return raw as T;
+        return raw as T?;
       } else {
         ApiResponseEntity<T> apiResponse =
             ApiResponseEntity<T>.fromJson(response.data);
@@ -126,8 +129,8 @@ class RequestClient {
       }
     } else {
       var exception = ApiException(
-        response.data["code"],
-        response.data["msg"],
+        response.data["status"],
+        response.data["message"],
       );
       throw exception;
     }
@@ -135,10 +138,16 @@ class RequestClient {
 
   ///业务内容处理
   T? _handleBusinessResponse<T>(ApiResponseEntity<T> response) {
-    if (response.code == RequestConfig.requestSuccessful) {
+    if (response.status == RequestConfig.requestSuccessful) {
       return response.data;
     } else {
-      var exception = ApiException(response.code, response.msg);
+      int? code;
+      if (response.status == false) {
+        code = -1;
+      } else {
+        code = 0;
+      }
+      var exception = ApiException(code, response.message);
       throw exception;
     }
   }

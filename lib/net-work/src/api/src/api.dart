@@ -1,19 +1,14 @@
 class APIS {
- const APIS._();
+  const APIS._();
 
-  static const user = "/user";
+  static const user = "/worker/index";
+  static const account = "/worker/account";
 
-  static const login = "/user/login";
+  static const batchTask = "/worker/batch_task";
 
-  static const test = "/user/register";
+  static const batchAccount = "/worker/batch_account";
 
-  static const image = "/images";
+  static const delete = "/worker/delete";
 
-  static const press = "/press/user_press";
-
-  static const advantage = "/edit_advantage/advantage";
-
-  static const education = "/edit_educate/educate";
-
-  static const recruitment = "/recruitment";
+  static const reason = "/worker/add_reason";
 }

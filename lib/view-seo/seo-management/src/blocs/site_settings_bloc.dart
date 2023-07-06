@@ -1,9 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
-import 'package:web_flutter/view-seo/seo-management/src/components/model.dart';
+import 'package:web_flutter/model/src/user_model_entity.dart';
+import 'package:web_flutter/net-work/src/api/src/home_request.dart';
+import 'package:web_flutter/view-seo/seo-management/management.dart';
 
-class SiteSettingsBloc with BodyMixin {
+class SiteSettingsBloc with BodyMixin<List<UserModelEntity>> {
+  late List<UserModelEntity> listModel;
+  @override
+  Future<List<UserModelEntity>> onInit() async {
+    try {
+      listModel = [];
+      await onLoading();
+      return listModel;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<UserModelEntity>> onLoading() async {
+    try {
+      var res = await HomeRequest.getUser();
+      listModel.addAll(res!);
+      controller.withData(listModel);
+      return listModel;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  final TextEditingController domainController = TextEditingController();
+  final TextEditingController serverController = TextEditingController();
+  int rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+
+  List<String> titleList = [
+    "ID",
+    "域名",
+    "昵称",
+    "账号类型",
+    "账号状态",
+    "登录IP",
+    "登录时间",
+    "开户时间",
+    "操作",
+  ];
+
+  List<EmployeTableModel> modelList = [
+    EmployeTableModel(
+      "shoper",
+      "电商",
+      "0",
+      "0",
+      "223.65.44.6",
+      "2023-06-30",
+      "2023-02-08",
+    ),
+    EmployeTableModel(
+      "ac2020",
+      "ac2020",
+      "1",
+      "1",
+      "223.65.44.6",
+      "2023-06-30",
+      "2023-02-08",
+    ),
+  ];
+
+  void onPerPage(int? newRowsPerPage) {
+    if (newRowsPerPage != null) {
+      rowsPerPage = newRowsPerPage;
+    }
+    pageScope.update();
+  }
+
   PagesScope pageScope = PagesScope();
   final TextEditingController controllerOutlined = TextEditingController();
   final TextEditingController checkController = TextEditingController();
@@ -42,32 +112,6 @@ class SiteSettingsBloc with BodyMixin {
     ModelPage(false, "minaho"),
   ];
 
-  List<FileFormaModel> fileFormatList = [
-    FileFormaModel(
-      "html",
-      FileFormatOptions.option1,
-    ),
-    FileFormaModel(
-      "php",
-      FileFormatOptions.option2,
-    ),
-    FileFormaModel(
-      "jsp",
-      FileFormatOptions.option3,
-    ),
-    FileFormaModel(
-      "asp",
-      FileFormatOptions.option4,
-    ),
-    FileFormaModel(
-      "aspx",
-      FileFormatOptions.option5,
-    ),
-    FileFormaModel(
-      "shtml",
-      FileFormatOptions.option6,
-    ),
-  ];
   ModelPage? values;
 
   HttpOptions groupValueOption = HttpOptions.option1;

@@ -11,12 +11,9 @@ class SEOTabBarBloc with BodyMixin {
   List<SEOTabBarModel>? list;
 
   List<SEOTabBarModel> tabNameList = [
-    SEOTabBarModel(AppRouters.siteSettingsNamed, title: "网站设置"),
-    SEOTabBarModel(AppRouters.friendlyLinksNamed, title: "友情链接"),
-    SEOTabBarModel(AppRouters.nginxConfigNamed, title: "广告设置"),
-    SEOTabBarModel(AppRouters.statisticsNamed, title: "统计代码"),
-    SEOTabBarModel(AppRouters.advertisingNamed, title: "模版代码"),
-    SEOTabBarModel(AppRouters.templateNamed, title: "Nainx配置"),
+    SEOTabBarModel(AppRouters.siteSettingsNamed, title: "账号"),
+    SEOTabBarModel(AppRouters.friendlyLinksNamed, title: "每日最大投诉次数"),
+    SEOTabBarModel(AppRouters.nginxConfigNamed, title: "分配的服务器ID"),
   ];
 
   List<SEOTabBarModel> tabFailureList = [

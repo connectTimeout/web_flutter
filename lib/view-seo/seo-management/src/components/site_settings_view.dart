@@ -298,9 +298,6 @@ class SiteAnalysisIpView extends StatelessWidget {
     );
   }
 }
-
-FileFormatOptions fileFormatOptions = FileFormatOptions.option1;
-
 ///文件格式
 class SiteFileFormatView extends StatelessWidget {
   const SiteFileFormatView({
@@ -828,11 +825,13 @@ class IRadioFileList extends StatelessWidget {
     required this.title,
     this.isRadio = false,
     this.onChanged,
+    this.groupValue,
   });
   final dynamic value;
   final String title;
   final bool isRadio;
   final ValueChanged<dynamic>? onChanged;
+  final dynamic groupValue;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -842,7 +841,7 @@ class IRadioFileList extends StatelessWidget {
         children: [
           Radio(
             value: value,
-            groupValue: fileFormatOptions,
+            groupValue: groupValue,
             onChanged: isRadio ? onChanged : null,
           ),
           Text(title),
@@ -850,26 +849,4 @@ class IRadioFileList extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget radioFileList({
-  required value,
-  required String title,
-  bool isRadio = false,
-  final ValueChanged<dynamic>? onChanged,
-}) {
-  return Padding(
-    padding: const EdgeInsets.only(right: 15),
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Radio(
-          value: value,
-          groupValue: fileFormatOptions,
-          onChanged: isRadio ? onChanged : null,
-        ),
-        Text(title),
-      ],
-    ),
-  );
 }

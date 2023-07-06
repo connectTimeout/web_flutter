@@ -15,43 +15,19 @@ class ICheckboxModel {
 class FileFormaModel {
   final String title;
   final dynamic type;
-  FileFormaModel(this.title, this.type);
+  final String value;
+  FileFormaModel(this.title, this.type, this.value);
 }
 
-List<FileFormaModel> fileFormatList = [
-  FileFormaModel(
-    "html",
-    FileFormatOptions.option1,
-  ),
-  FileFormaModel(
-    "php",
-    FileFormatOptions.option2,
-  ),
-  FileFormaModel(
-    "jsp",
-    FileFormatOptions.option3,
-  ),
-  FileFormaModel(
-    "asp",
-    FileFormatOptions.option4,
-  ),
-  FileFormaModel(
-    "aspx",
-    FileFormatOptions.option5,
-  ),
-  FileFormaModel(
-    "shtml",
-    FileFormatOptions.option6,
-  ),
+List<FileFormaModel> tableFormatList = [
+  FileFormaModel("搜索展现和实际不一致", FileFormatOptions.option3, "account"),
+  FileFormaModel("侵犯个人隐私", FileFormatOptions.option4, "server"),
+  FileFormaModel("色情暴力", FileFormatOptions.option5, "task"),
+  FileFormaModel("未成年有害信息", FileFormatOptions.option10, "reason"),
 ];
-
-List<FileFormaModel> filePCList = [
-  FileFormaModel(
-    "PC",
-    FileFormatOptions.option1,
-  ),
-  FileFormaModel(
-    "手机",
-    FileFormatOptions.option2,
-  ),
+List<FileFormaModel> fileFormatList = [
+  FileFormaModel("搜索展现和实际不一致", FileFormatOptions.option3, "3"),
+  FileFormaModel("侵犯个人隐私", FileFormatOptions.option4, "4"),
+  FileFormaModel("色情暴力", FileFormatOptions.option5, "5"),
+  FileFormaModel("未成年有害信息", FileFormatOptions.option10, "10"),
 ];

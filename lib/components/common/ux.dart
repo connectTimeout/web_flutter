@@ -23,6 +23,7 @@ class UX {
   static void toast(String? message) {
     if (message?.isNotEmpty != true) return;
     UX ux = UX.share();
+    print(message);
     assert(ux.contexts.isNotEmpty == true);
     _toast.show(ux.contexts.last, text: message!);
   }

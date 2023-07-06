@@ -1,3 +1,3 @@
-class RawData{
-  dynamic value;
+class RawData {
+  late List<dynamic> value;
 }

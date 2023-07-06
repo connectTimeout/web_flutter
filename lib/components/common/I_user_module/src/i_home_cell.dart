@@ -133,105 +133,88 @@ class _IHomeCellState extends State<IHomeCell> {
               BorderCell(
                 top: BorderSide.none,
                 bottom: BorderSide.none,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BorderCell(
-                      left: BorderSide.none,
-                      top: BorderSide.none,
-                      bottom: BorderSide.none,
-                      child: SizedBox(
-                        height: size.height - 80,
-                        width: 70,
-                        child: _generateExpansionTileWidget(
-                          widget.serverList,
-                          namePath,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    SizedBox(
-                      height: size.height - 84,
-                      width: size.width - 78,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 100,
-                            child: Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: widget.model.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        var model = widget.model[index];
-                                        return ITextButton(
-                                          padding: const EdgeInsets.all(5),
-                                          title: model.title ?? "",
-                                          icon: model.icon ?? Icons.home_sharp,
-                                          isIcon: true,
-                                          isSelect: index == tabbarIndex,
-                                          onPressed: () {
-                                            setState(() {
-                                              tabbarIndex = index;
-                                              namePath = model.namePath;
-                                            });
-                                            context.goNamed(
-                                              model.namePath ??
-                                                  AppRouters.siteSettingsPath,
-                                              queryParameters:
-                                                  model.queryParameters ??
-                                                      {
-                                                        "serverId": "$indexs",
-                                                      },
-                                            );
-                                          },
-                                        );
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: SizedBox(
+                    height: size.height - 84,
+                    width: size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: widget.model.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      var model = widget.model[index];
+                                      return ITextButton(
+                                        padding: const EdgeInsets.all(5),
+                                        title: model.title ?? "",
+                                        icon: model.icon ?? Icons.home_sharp,
+                                        isIcon: true,
+                                        isSelect: index == tabbarIndex,
+                                        onPressed: () {
+                                          setState(() {
+                                            tabbarIndex = index;
+                                            namePath = model.namePath;
+                                          });
+                                          context.goNamed(
+                                            model.namePath ??
+                                                AppRouters.siteSettingsPath,
+                                            queryParameters:
+                                                model.queryParameters ??
+                                                    {
+                                                      "serverId": "$indexs",
+                                                    },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    IElevatedButton(
+                                      onPressed: () {
+                                        context.go(AppRouters.homePath);
+                                      },
+                                      icon: Icons.home_sharp,
+                                      title: "返回主页",
+                                    ),
+                                    IElevatedButton(
+                                      title: "退出登录",
+                                      icon: Icons.power_settings_new,
+                                      onPressed: () {
+                                        context.go(AppRouters.siteSettingsPath);
                                       },
                                     ),
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const SizedBox(width: 10),
-                                      IElevatedButton(
-                                        onPressed: () {
-                                          context.go(AppRouters.homePath);
-                                        },
-                                        icon: Icons.home_sharp,
-                                        title: "返回主页",
-                                      ),
-                                      IElevatedButton(
-                                        title: "退出登录",
-                                        icon: Icons.power_settings_new,
-                                        onPressed: () {
-                                          context
-                                              .go(AppRouters.siteSettingsPath);
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
-                              child: widget.child,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
                             ),
-                          )
-                        ],
-                      ),
+                            child: widget.child,
+                          ),
+                        )
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

@@ -1,10 +1,10 @@
-class RequestConfig{
+class RequestConfig {
   ///地址
-  static const url = "http://192.168.1.116:8186";
+  static const url = "http://seo-report.yichadaodi.com";
 
   ///连接超时
   static const connectTimeout = 15000;
 
   ///请求成功
-  static const requestSuccessful = 0;
+  static const requestSuccessful = true;
 }

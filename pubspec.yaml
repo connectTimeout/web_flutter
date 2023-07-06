@@ -45,6 +45,7 @@ dependencies:
   dual_screen: ^1.0.4
   responsive_builder: ^0.7.0
   intl: ^0.18.1
+  cookie_jar: ^4.0.5
 
 dev_dependencies:
   flutter_test:

@@ -34,3 +34,5 @@ export 'common/formatters/number_input_formatter.dart';
 
 ///i_user_module
 export 'common/i_user_module/i_user_module.dart';
+
+export 'common/custom_paginated_table.dart';
