@@ -66,7 +66,7 @@ class AddAccountPage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("请选"),
+                            Text(bloc.servers ?? "请选"),
                             onRefreshDomain(data, bloc),
                           ],
                         ),
@@ -78,7 +78,7 @@ class AddAccountPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(30),
                 child: VariousStatelessButton(
-                  onPressed: () {},
+                  onPressed: () => bloc.onSubmit(),
                   color: Colors.blue,
                   textColor: Colors.white,
                   title: "提交",

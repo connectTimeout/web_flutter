@@ -15,10 +15,10 @@ class AddServerPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           VariousStatelessButton(
-            onPressed: () {},
+            onPressed: () => bloc.onSubmit(),
             color: Colors.blue,
             textColor: Colors.white,
-            title: "更换域名",
+            title: "提交",
           ),
           ITextListCell(
             title: "添加投诉理由",

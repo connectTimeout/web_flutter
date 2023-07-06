@@ -26,7 +26,7 @@ class SEOHomeBloc with BodyMixin {
         ),
         ITabBarModel(
           AppRouters.addServerNamed,
-          title: "添加服务器和位置分组",
+          title: "添加投诉理由",
           icon: Icons.home_sharp,
           queryParameters: queryParameters,
         ),

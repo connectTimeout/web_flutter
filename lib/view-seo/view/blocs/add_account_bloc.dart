@@ -6,7 +6,7 @@ import 'package:web_flutter/net-work/src/api/api.dart';
 import '../../../components/components.dart';
 
 class AddAccountBloc with BodyMixin<List<AccountModelEntity>> {
-  late String servers;
+  String? servers;
 
   double sliderValue = 5;
 
@@ -59,7 +59,7 @@ class AddAccountBloc with BodyMixin<List<AccountModelEntity>> {
       AccountModelEntity params = AccountModelEntity();
       params.cookie = accountController.text;
       params.dayMaxReport = maxCountController.text;
-      params.serverId = servers;
+      params.serverId = servers ?? '0';
       await HomeRequest.postAccount(params: params);
       UX.hidden();
     } catch (e) {
