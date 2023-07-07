@@ -11,6 +11,7 @@ class AddReasonBloc with BodyMixin {
         reason: reasonController.text,
       );
       UX.hidden();
+      IToast.show("添加成功");
     } catch (e) {
       UX.hidden();
       UX.toast(e.toString());

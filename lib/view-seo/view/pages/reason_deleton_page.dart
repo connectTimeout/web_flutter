@@ -14,14 +14,11 @@ class ReasonDeletonPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: VariousStatelessButton(
-              onPressed: () => bloc.onSubmit(),
-              color: Colors.blue,
-              textColor: Colors.white,
-              title: "提交",
-            ),
+          VariousStatelessButton(
+            onPressed: () => bloc.onSubmit(),
+            color: Colors.blue,
+            textColor: Colors.white,
+            title: "提交",
           ),
           ChangeNotifierProvider<PagesScope>.value(
             value: bloc.pageScope,

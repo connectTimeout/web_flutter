@@ -24,6 +24,7 @@ class AddServerBloc with BodyMixin {
         isp: ispController.text,
       );
       UX.hidden();
+      IToast.show("添加成功");
     } catch (e) {
       UX.hidden();
       UX.toast(e.toString());

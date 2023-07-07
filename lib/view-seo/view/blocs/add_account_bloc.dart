@@ -57,12 +57,14 @@ class AddAccountBloc with BodyMixin<List<ServerModelEntity>?> {
   void onSubmit() async {
     try {
       UX.show();
+
       AccountModelEntity params = AccountModelEntity();
       params.cookie = accountController.text;
       params.dayMaxReport = maxCountController.text;
       params.serverId = servers ?? '0';
       await HomeRequest.postAccount(param: params);
       UX.hidden();
+      IToast.show("添加成功");
     } catch (e) {
       UX.hidden();
       UX.toast(e.toString());

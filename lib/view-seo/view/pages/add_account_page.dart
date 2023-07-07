@@ -20,6 +20,12 @@ class AddAccountPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              VariousStatelessButton(
+                onPressed: () => bloc.onSubmit(),
+                color: Colors.blue,
+                textColor: Colors.white,
+                title: "提交",
+              ),
               ITextListCell(
                 title: "账号",
                 width: 140,
@@ -74,15 +80,6 @@ class AddAccountPage extends StatelessWidget {
                   );
                 }),
               ),
-              Padding(
-                padding: const EdgeInsets.all(30),
-                child: VariousStatelessButton(
-                  onPressed: () => bloc.onSubmit(),
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  title: "提交",
-                ),
-              ),
             ],
           ),
         );
@@ -113,28 +110,27 @@ class AddAccountPage extends StatelessWidget {
         );
       },
       menuChildren: [
-        ...bloc.listModel?.map(
-              (e) {
-                return MenuItemButton(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(e.id),
-                  ),
-                  onPressed: () => bloc.onMenu(e.id),
-                );
-              },
-            ).toList() ??
-            [],
+        SizedBox(
+          height: 350,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: bloc.listModel?.map(
+                    (e) {
+                      return MenuItemButton(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(e.id),
+                        ),
+                        onPressed: () => bloc.onMenu(e.id),
+                      );
+                    },
+                  ).toList() ??
+                  [],
+            ),
+          ),
+        ),
       ],
     );
   }
 }
-
-List<String> titleModel = [
-  "全部状态",
-  "禁用站点",
-  "等待建站",
-  "建站中",
-  "建站完成",
-  "建站失败",
-];

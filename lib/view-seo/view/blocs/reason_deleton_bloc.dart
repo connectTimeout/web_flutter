@@ -22,6 +22,7 @@ class ReasonDeletonBloc with BodyMixin {
         id: iDController.text,
       );
       UX.hidden();
+      IToast.show("删除成功");
     } catch (e) {
       UX.hidden();
       UX.toast(e.toString());

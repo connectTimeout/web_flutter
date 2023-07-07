@@ -8,7 +8,7 @@ import 'package:web_flutter/net-work/src/api/src/home_request.dart';
 class ComplaintBloc with BodyMixin {
   PagesScope pageScope = PagesScope();
 
-  double sliderValue = 30;
+  double sliderValue = 1;
 
   bool? isCheckbox = false;
 
@@ -48,6 +48,7 @@ class ComplaintBloc with BodyMixin {
       params.reportType = type;
       await HomeRequest.postBatchTask(param: params);
       UX.hidden();
+      IToast.show("添加成功");
     } catch (e) {
       UX.hidden();
       UX.toast(e.toString());

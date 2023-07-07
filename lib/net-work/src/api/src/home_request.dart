@@ -28,7 +28,7 @@ class HomeRequest {
       var params = {
         "status": status,
       };
-      var json = await requestClient.get(APIS.account, queryParameters: params)
+      var json = await requestClient.get(APIS.server, queryParameters: params)
           as List<dynamic>;
       return json.map((e) => ServerModelEntity.fromJson(e)).toList();
     } catch (e) {
