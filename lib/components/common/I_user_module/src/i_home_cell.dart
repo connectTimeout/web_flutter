@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:web_flutter/components/components.dart';
-import 'package:web_flutter/routers/routers.dart';
 
 class IHomeCell extends StatefulWidget {
   const IHomeCell({
     super.key,
     required this.child,
     required this.model,
-    this.selectIndex,
+    required this.taberChild,
   });
 
   final Widget child;
+  final Widget taberChild;
 
   final List<ITabBarModel> model;
-
-  final int? selectIndex;
 
   @override
   State<IHomeCell> createState() => _IHomeCellState();
@@ -23,20 +20,13 @@ class IHomeCell extends StatefulWidget {
 
 class _IHomeCellState extends State<IHomeCell> {
   int? selectIndex;
-  int? indexs;
   String? namePath;
-  int tabbarIndex = 0;
-  @override
-  void initState() {
-    if (widget.selectIndex != null) {
-      selectIndex = widget.selectIndex;
-    } else {
-      selectIndex = null;
-    }
-    super.initState();
+  bool onHover = false;
+  void onIndex(int index) async {
+    var sp = await SpUtil.getInstance();
+    sp?.putInt("index", index);
   }
 
-  bool onHover = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -93,38 +83,7 @@ class _IHomeCellState extends State<IHomeCell> {
                             padding: const EdgeInsets.all(15),
                             child: Row(
                               children: [
-                                Expanded(
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: widget.model.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      var model = widget.model[index];
-                                      return ITextButton(
-                                        padding: const EdgeInsets.all(5),
-                                        title: model.title ?? "",
-                                        icon: model.icon ?? Icons.home_sharp,
-                                        isIcon: true,
-                                        isSelect: index == tabbarIndex,
-                                        onPressed: () {
-                                          setState(() {
-                                            tabbarIndex = index;
-                                            namePath = model.namePath;
-                                          });
-                                          context.goNamed(
-                                            model.namePath ??
-                                                AppRouters.complaintNamed,
-                                            queryParameters:
-                                                model.queryParameters ??
-                                                    {
-                                                      "serverId": "$indexs",
-                                                    },
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
+                                Expanded(child: widget.taberChild),
                               ],
                             ),
                           ),
@@ -149,12 +108,6 @@ class _IHomeCellState extends State<IHomeCell> {
       ],
     );
   }
-
-  void onss(int index, int id) async {
-    var sp = await SpUtil.getInstance();
-    await sp?.putInt("serverIndex", index);
-    await sp?.putInt("domainId", id);
-  }
 }
 
 class ITabBarModel {
@@ -162,7 +115,12 @@ class ITabBarModel {
   final String? title;
   final String? namePath;
   final Map<String, dynamic>? queryParameters;
-  ITabBarModel(this.namePath, {this.icon, this.title, this.queryParameters});
+  ITabBarModel(
+    this.namePath, {
+    this.icon,
+    this.title,
+    this.queryParameters,
+  });
 }
 
 ///边框线

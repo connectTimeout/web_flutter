@@ -9,7 +9,6 @@ export 'common/ux.dart';
 export 'common/empty.dart';
 export 'common/fade.dart';
 export 'common/update_scope.dart';
-export 'common/jk_pull_refresh.dart';
 export 'common/constant.dart';
 export 'common/shared_preferences.dart';
 export 'common/i_number_input.dart';
@@ -20,9 +19,6 @@ export 'common/body/src/body_mixin.dart';
 
 ///i_button
 export 'common/i_button/i_buttons.dart';
-
-///adapter
-export 'common/adapter/cupertino_swipe_back_observer.dart';
 
 ///formatters
 export 'common/formatters/number_input_formatter.dart';

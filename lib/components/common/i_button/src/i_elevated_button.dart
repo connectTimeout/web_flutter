@@ -125,7 +125,7 @@ class _ITextButtonState extends State<ITextButton> {
   bool onHover = false;
 
   Color? get colors {
-    return onHover ? Colors.white : const Color.fromARGB(255, 80, 197, 162);
+    return onHover ? Colors.white : const Color.fromARGB(255, 221, 250, 241);
   }
 
   @override
@@ -139,60 +139,37 @@ class _ITextButtonState extends State<ITextButton> {
             ),
             padding: widget.padding,
             backgroundColor: widget.isSelect
-                ? Colors.greenAccent
+                ? const Color.fromARGB(255, 60, 136, 99)
                 : onHover
                     ? const Color.fromARGB(255, 80, 197, 162)
-                    : const Color.fromARGB(255, 177, 177, 177)),
+                    : const Color.fromARGB(255, 143, 143, 143)),
         onPressed: widget.onPressed,
         onHover: (value) {
           setState(() {
             onHover = !onHover;
           });
         },
-        child: widget.isIcon
-            ? Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                child: Column(
-                  children: [
-                    Icon(
-                      widget.icon,
-                      color: colors,
-                      size: 26,
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.title ?? '-',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: colors,
-                      ),
-                    )
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          child: Column(
+            children: [
+              Icon(
+                widget.icon,
+                color: colors,
+                size: 26,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                widget.title ?? '-',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: colors,
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.language,
-                      size: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        widget.title?.substring(0, 1) ?? "-",
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            const TextStyle(color: Colors.blue, fontSize: 15),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            ],
+          ),
+        ),
       ),
     );
   }

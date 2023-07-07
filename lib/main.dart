@@ -6,10 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
 import 'package:web_flutter/routers/routers.dart';
+import 'package:web_flutter/view-seo/seo-home/src/components/cors.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
-
+  onServer();
   runApp(const MyApp());
 }
 

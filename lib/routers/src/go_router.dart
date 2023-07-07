@@ -100,7 +100,6 @@ class AppRouters {
         },
       ),
     ],
-
     errorBuilder: (context, GoRouterState state) {
       return const ErrorPage();
     },

@@ -6,6 +6,15 @@ import 'package:web_flutter/model/src/server_model_entity.dart';
 import 'package:web_flutter/net-work/src/api/api.dart';
 
 class HomeRequest {
+  static Dio dio = Dio(
+    BaseOptions(
+      headers: {
+        "Access-Control-Allow-Origin": '*',
+        "Access-Control-Allow-Credentials": true,
+      },
+    ),
+  );
+
   static Future<List<ServerModelEntity>?> getAccount({
     int status = 0,
   }) async {
@@ -13,8 +22,7 @@ class HomeRequest {
       var params = {
         "status": status,
       };
-
-      var response = await Dio()
+      var response = await dio
           .get(
             "${RequestConfig.url}${APIS.server}",
             queryParameters: params,
@@ -41,7 +49,7 @@ class HomeRequest {
         "report_reason": param?.reportReason,
         "report_type": param?.reportType,
       });
-      var json = await Dio()
+      var json = await dio
           .post(
             "${RequestConfig.url}${APIS.batchTask}",
             data: params,
@@ -66,7 +74,7 @@ class HomeRequest {
         "location": location,
         "isp": isp,
       });
-      var json = await Dio()
+      var json = await dio
           .post(
             "${RequestConfig.url}${APIS.addServer}",
             data: params,
@@ -89,7 +97,7 @@ class HomeRequest {
         "day_max_report": param?.dayMaxReport,
         "server_id": param?.serverId,
       });
-      var json = await Dio()
+      var json = await dio
           .post(
             "${RequestConfig.url}${APIS.batchAccount}",
             data: params,
@@ -112,7 +120,7 @@ class HomeRequest {
         "table": table,
         "id": id,
       });
-      var json = await Dio()
+      var json = await dio
           .post(
             "${RequestConfig.url}${APIS.delete}",
             data: params,
@@ -133,7 +141,7 @@ class HomeRequest {
       FormData params = FormData.fromMap({
         "reason": reason,
       });
-      var json = await Dio()
+      var json = await dio
           .post(
             "${RequestConfig.url}${APIS.reason}",
             data: params,
