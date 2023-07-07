@@ -9,6 +9,7 @@ import 'package:web_flutter/routers/routers.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
+
   runApp(const MyApp());
 }
 

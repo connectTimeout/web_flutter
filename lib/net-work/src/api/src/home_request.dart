@@ -1,26 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:web_flutter/config/config.dart';
 import 'package:web_flutter/model/model.dart';
+import 'package:web_flutter/model/src/response/api_response_entity.dart';
 import 'package:web_flutter/model/src/server_model_entity.dart';
 import 'package:web_flutter/net-work/src/api/api.dart';
-import 'package:web_flutter/net-work/src/net-util/request_client.dart';
 
 class HomeRequest {
-  static Future<List<UserModelEntity>?> getUser({
-    int status = 0,
-  }) async {
-    try {
-      var params = {
-        "status": status,
-      };
-      var json = await requestClient.get(APIS.user, queryParameters: params)
-          as List<dynamic>;
-      return json.map((e) => UserModelEntity.fromJson(e)).toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   static Future<List<ServerModelEntity>?> getAccount({
     int status = 0,
   }) async {
@@ -28,8 +13,18 @@ class HomeRequest {
       var params = {
         "status": status,
       };
-      var json = await requestClient.get(APIS.server, queryParameters: params)
-          as List<dynamic>;
+
+      var response = await Dio()
+          .get(
+            "${RequestConfig.url}${APIS.server}",
+            queryParameters: params,
+          )
+          .timeout(
+            const Duration(seconds: 3),
+          );
+      ApiResponseEntity<dynamic> apiResponse =
+          ApiResponseEntity<dynamic>.fromJson(response.data);
+      var json = apiResponse.data as List<dynamic>;
       return json.map((e) => ServerModelEntity.fromJson(e)).toList();
     } catch (e) {
       rethrow;
@@ -90,9 +85,9 @@ class HomeRequest {
   }) async {
     try {
       FormData params = FormData.fromMap({
-        "cookie": param?.cookie,
+        "cookies": param?.cookie,
         "day_max_report": param?.dayMaxReport,
-        "server_Id": param?.serverId,
+        "server_id": param?.serverId,
       });
       var json = await Dio()
           .post(

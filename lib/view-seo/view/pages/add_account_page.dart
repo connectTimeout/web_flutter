@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
@@ -60,22 +59,7 @@ class AddAccountPage extends StatelessWidget {
                     title: "分配的服务器ID",
                     width: 140,
                     children: [
-                      Container(
-                        width: 400,
-                        height: 35,
-                        padding: const EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(bloc.servers ?? "请选"),
-                            onRefreshDomain(bloc),
-                          ],
-                        ),
-                      )
+                      onRefreshDomain(bloc),
                     ],
                   );
                 }),
@@ -92,20 +76,32 @@ class AddAccountPage extends StatelessWidget {
   ) {
     return MenuAnchor(
       builder: (context, controller, child) {
-        return SizedBox(
-          height: 20,
-          width: 20,
-          child: IconButton(
-            iconSize: 16,
-            padding: const EdgeInsets.all(0),
-            onPressed: () {
-              if (controller.isOpen) {
-                controller.close();
-              } else {
-                controller.open();
-              }
-            },
-            icon: const Icon(CupertinoIcons.slider_horizontal_3),
+        return InkWell(
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+          child: Container(
+            width: 400,
+            height: 35,
+            padding: const EdgeInsets.only(left: 5),
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.3),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(bloc.servers ?? "请选择"),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 15,
+                ),
+              ],
+            ),
           ),
         );
       },
