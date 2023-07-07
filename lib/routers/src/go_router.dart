@@ -90,13 +90,10 @@ class AppRouters {
           ),
         ],
         builder: (context, state, child) {
-          final args = state.queryParameters["serverId"];
-          int id = int.parse(args ?? "0");
           return Provider<SEOHomeBloc>(
             create: (_) => SEOHomeBloc(),
             child: SeoHomePage(
               state: state,
-              id: id,
               child: child,
             ),
           );

@@ -5,12 +5,14 @@ import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/view-seo/seo-home/src/blocs/seo_home_bloc.dart';
 
 class SeoHomePage extends StatelessWidget {
-  const SeoHomePage(
-      {super.key, required this.state, required this.child, required this.id});
+  const SeoHomePage({
+    super.key,
+    required this.state,
+    required this.child,
+  });
 
   final GoRouterState state;
   final Widget child;
-  final int id;
 
   @override
   Widget build(BuildContext context) {
