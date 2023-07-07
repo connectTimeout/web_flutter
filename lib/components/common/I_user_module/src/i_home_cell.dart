@@ -2,38 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/routers/routers.dart';
-import 'package:web_flutter/utils/utils.dart';
-import 'package:web_flutter/view-seo/seo-home/src/models/seo_servers_model.dart';
 
 class IHomeCell extends StatefulWidget {
   const IHomeCell({
     super.key,
     required this.child,
-    this.serverName,
-    this.userName,
-    this.onMessage,
-    this.serverList,
-    this.apiName,
     required this.model,
     this.selectIndex,
   });
 
   final Widget child;
-
-  ///选择的服务器
-  final String? serverName;
-
-  ///用户名称
-  final String? userName;
-
-  ///消息通知
-  final VoidCallback? onMessage;
-
-  ///服务器数据
-  final List<ServersModel>? serverList;
-
-  ///路由地址
-  final String? apiName;
 
   final List<ITabBarModel> model;
 
@@ -65,9 +43,8 @@ class _IHomeCellState extends State<IHomeCell> {
     return Stack(
       children: [
         const Positioned.fill(
-          child: INetworkImage(
-            fit: BoxFit.cover,
-            placeholder: ImgAsset.beijing,
+          child: ColoredBox(
+            color: Colors.black,
           ),
         ),
         BorderCell(
@@ -81,15 +58,10 @@ class _IHomeCellState extends State<IHomeCell> {
                     horizontal: 8,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "狂侠站群系统",
-                        style: TextStyle(color: Theme.of(context).cardColor),
-                      ),
                       Container(
                         height: 50,
-                        alignment: Alignment.center,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
                         decoration: BoxDecoration(
@@ -97,35 +69,9 @@ class _IHomeCellState extends State<IHomeCell> {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                                 color: Colors.amberAccent, width: 0.5)),
-                        child: Text(
-                            widget.serverList![selectIndex ?? 0].serverName,
-                            style: const TextStyle(color: Colors.white)),
+                        child: const Text("投诉工具",
+                            style: TextStyle(color: Colors.white)),
                       ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.face_outlined,
-                            size: 25,
-                            color: Colors.red,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 5),
-                            child: Text(
-                              widget.userName ?? "nihao",
-                              style:
-                                  TextStyle(color: Theme.of(context).cardColor),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: widget.onMessage,
-                            icon: const Icon(
-                              Icons.circle_notifications,
-                              color: Colors.white,
-                              size: 26,
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -167,7 +113,7 @@ class _IHomeCellState extends State<IHomeCell> {
                                           });
                                           context.goNamed(
                                             model.namePath ??
-                                                AppRouters.siteSettingsPath,
+                                                AppRouters.complaintNamed,
                                             queryParameters:
                                                 model.queryParameters ??
                                                     {
@@ -179,26 +125,6 @@ class _IHomeCellState extends State<IHomeCell> {
                                     },
                                   ),
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    IElevatedButton(
-                                      onPressed: () {
-                                        context.go(AppRouters.homePath);
-                                      },
-                                      icon: Icons.home_sharp,
-                                      title: "返回主页",
-                                    ),
-                                    IElevatedButton(
-                                      title: "退出登录",
-                                      icon: Icons.power_settings_new,
-                                      onPressed: () {
-                                        context.go(AppRouters.siteSettingsPath);
-                                      },
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           ),
@@ -228,75 +154,6 @@ class _IHomeCellState extends State<IHomeCell> {
     var sp = await SpUtil.getInstance();
     await sp?.putInt("serverIndex", index);
     await sp?.putInt("domainId", id);
-  }
-
-  Widget _generateExpansionTileWidget(
-    List<ServersModel>? serverList,
-    String? apiName,
-  ) {
-    int index = serverList?.length ?? 0;
-    return ExpansionTile(
-      initiallyExpanded: true,
-      tilePadding: const EdgeInsets.all(0),
-      title: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: Text(
-          "$index台",
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-          ),
-        ),
-      ),
-      collapsedIconColor: Colors.white,
-      children: List.generate(
-        serverList?.length ?? 0,
-        (index) {
-          int inde = index;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 3),
-            child: _generateWidget(
-              serverList?[index].serverName ?? '',
-              inde == selectIndex,
-              onPressed: () {
-                setState(
-                  () {
-                    selectIndex = index;
-                    onss(index, serverList?[index].id ?? 0);
-                    indexs = index;
-                  },
-                );
-                context.goNamed(
-                  apiName ?? AppRouters.siteSettingsNamed,
-                  queryParameters: {"serverId": "${serverList?[index].id}"},
-                );
-                print({"serverId": "${serverList?[index].id}"});
-              },
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  /// 生成 ExpansionTile 下的 ListView 的单个组件
-  Widget _generateWidget(String title, bool isSelect,
-      {VoidCallback? onPressed}) {
-    /// 使用该组件可以使宽度撑满
-    return Tooltip(
-      margin: const EdgeInsets.only(left: 70),
-      textAlign: TextAlign.center,
-      message: title,
-      child: FractionallySizedBox(
-        widthFactor: 1,
-        child: ITextButton(
-          title: title,
-          onPressed: onPressed,
-          isSelect: isSelect,
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-        ),
-      ),
-    );
   }
 }
 

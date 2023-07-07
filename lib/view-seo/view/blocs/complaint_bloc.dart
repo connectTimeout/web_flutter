@@ -1,14 +1,9 @@
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:web_flutter/components/components.dart';
 import 'package:web_flutter/consts/consts.dart';
 import 'package:web_flutter/model/src/batch_task_model_entity.dart';
 import 'package:web_flutter/net-work/src/api/api.dart';
 import 'package:web_flutter/net-work/src/api/src/home_request.dart';
-
-class Api {
-  static final CookieJar cookieJar = CookieJar();
-}
 
 class ComplaintBloc with BodyMixin {
   PagesScope pageScope = PagesScope();
@@ -51,7 +46,7 @@ class ComplaintBloc with BodyMixin {
       params.reportNum = countController.text;
       params.reportReason = complaintController.text;
       params.reportType = type;
-      await HomeRequest.postBatchTask(params: params);
+      await HomeRequest.postBatchTask(param: params);
       UX.hidden();
     } catch (e) {
       UX.hidden();

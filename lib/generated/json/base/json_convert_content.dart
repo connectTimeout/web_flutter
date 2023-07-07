@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:web_flutter/model/src/account_model_entity.dart';
 import 'package:web_flutter/model/src/batch_task_model_entity.dart';
+import 'package:web_flutter/model/src/server_model_entity.dart';
 import 'package:web_flutter/model/src/user_model_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -16,6 +17,7 @@ class JsonConvert {
 	static final Map<String, JsonConvertFunction> convertFuncMap = {
 		(AccountModelEntity).toString(): AccountModelEntity.fromJson,
 		(BatchTaskModelEntity).toString(): BatchTaskModelEntity.fromJson,
+		(ServerModelEntity).toString(): ServerModelEntity.fromJson,
 		(UserModelEntity).toString(): UserModelEntity.fromJson,
 	};
 
@@ -100,6 +102,9 @@ List<T>? convertListNotNull<T>(dynamic value, {EnumConvertFunction? enumConvert}
 		}
 		if(<BatchTaskModelEntity>[] is M){
 			return data.map<BatchTaskModelEntity>((Map<String, dynamic> e) => BatchTaskModelEntity.fromJson(e)).toList() as M;
+		}
+		if(<ServerModelEntity>[] is M){
+			return data.map<ServerModelEntity>((Map<String, dynamic> e) => ServerModelEntity.fromJson(e)).toList() as M;
 		}
 		if(<UserModelEntity>[] is M){
 			return data.map<UserModelEntity>((Map<String, dynamic> e) => UserModelEntity.fromJson(e)).toList() as M;

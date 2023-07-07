@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web_flutter/model/model.dart';
+import 'package:web_flutter/model/src/server_model_entity.dart';
 import 'package:web_flutter/net-work/src/api/api.dart';
 
 import '../../../components/components.dart';
 
-class AddAccountBloc with BodyMixin<List<AccountModelEntity>> {
+class AddAccountBloc with BodyMixin<List<ServerModelEntity>?> {
   String? servers;
 
   double sliderValue = 5;
@@ -23,10 +24,10 @@ class AddAccountBloc with BodyMixin<List<AccountModelEntity>> {
   ///最大投诉次数
   final TextEditingController maxCountController = TextEditingController();
 
-  late List<AccountModelEntity> listModel;
+  List<ServerModelEntity>? listModel;
 
   @override
-  Future<List<AccountModelEntity>> onInit() async {
+  Future<List<ServerModelEntity>?> onInit() async {
     try {
       listModel = [];
       await onLoading();
@@ -37,10 +38,10 @@ class AddAccountBloc with BodyMixin<List<AccountModelEntity>> {
   }
 
   @override
-  Future<List<AccountModelEntity>> onLoading() async {
+  Future<List<ServerModelEntity>?> onLoading() async {
     try {
       var res = await HomeRequest.getAccount();
-      listModel.addAll(res!);
+      listModel?.addAll(res!);
       controller.withData(listModel);
       return listModel;
     } catch (e) {
@@ -60,7 +61,7 @@ class AddAccountBloc with BodyMixin<List<AccountModelEntity>> {
       params.cookie = accountController.text;
       params.dayMaxReport = maxCountController.text;
       params.serverId = servers ?? '0';
-      await HomeRequest.postAccount(params: params);
+      await HomeRequest.postAccount(param: params);
       UX.hidden();
     } catch (e) {
       UX.hidden();

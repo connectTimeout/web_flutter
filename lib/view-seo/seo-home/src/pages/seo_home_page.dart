@@ -25,8 +25,6 @@ class SeoHomePage extends StatelessWidget {
             const Positioned.fill(child: ColoredBox(color: Colors.black)),
             Builder(builder: (context) {
               return IHomeCell(
-                serverList: bloc.serverList,
-                userName: "dfdf",
                 selectIndex: bloc.selectIndex,
                 model: bloc.model,
                 child: child,

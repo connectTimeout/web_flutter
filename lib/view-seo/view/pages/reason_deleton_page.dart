@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:web_flutter/components/components.dart';
-import 'package:web_flutter/view-seo/seo-management/management.dart';
-import 'package:web_flutter/view-seo/view/blocs/reason_deleton_bloc.dart';
+import 'package:web_flutter/view-seo/seo.dart';
 
 class ReasonDeletonPage extends StatelessWidget {
   const ReasonDeletonPage({super.key});
@@ -51,7 +50,8 @@ class ReasonDeletonPage extends StatelessWidget {
               ITextField(
                 controller: bloc.iDController,
                 width: 400,
-                maxLines: 5,
+                maxLines: 1,
+                height: 35,
                 hintText: "删除ID",
               ),
             ],
